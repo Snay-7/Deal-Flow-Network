@@ -135,28 +135,55 @@ function TPSLogo({ size = 38, dark = false }) {
 }
 
 function NavBar({ page, setPage }) {
+  const [menuOpen, setMenuOpen] = useState(false);
   return (
     <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, background: "white", borderBottom: "1px solid #ebebeb", padding: "0 5%" }}>
-      <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", height: 72 }}>
-        <div style={{ cursor: "pointer", display: "flex", alignItems: "center", gap: 10 }} onClick={() => setPage("home")}>
-          <TPSLogo size={34} />
+      <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", height: 64 }}>
+        {/* Logo */}
+        <div style={{ cursor: "pointer", display: "flex", alignItems: "center", gap: 10 }} onClick={() => { setPage("home"); setMenuOpen(false); }}>
+          <TPSLogo size={32} />
           <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
-            <span style={{ fontFamily: "'Arial Rounded MT Bold','Arial',sans-serif", fontWeight: 800, fontSize: 17, color: "#1a3c5e", letterSpacing: "-0.3px", lineHeight: 1.1 }}>TPS</span>
-            <span style={{ fontSize: 10, color: "#999", letterSpacing: "0.3px", fontWeight: 400 }}>The Property Source Group</span>
+            <span style={{ fontFamily: "'Arial Rounded MT Bold','Arial',sans-serif", fontWeight: 800, fontSize: 16, color: "#1a3c5e", letterSpacing: "-0.3px", lineHeight: 1.1 }}>TPS</span>
+            <span style={{ fontSize: 9, color: "#999", letterSpacing: "0.3px", fontWeight: 400 }}>The Property Source Group</span>
           </div>
         </div>
-        <div style={{ display: "flex", gap: 0, alignItems: "center" }}>
+
+        {/* Desktop nav */}
+        <div className="desktop-nav" style={{ display: "flex", gap: 0, alignItems: "center" }}>
           {[["home","Deals"], ["r2r","R2R"], ["bmv","BMV"], ["btl","BTL"], ["brrr","BRRR"]].map(([p, label]) => (
-            <button key={p} onClick={() => setPage(p)} style={{ background: "none", border: "none", cursor: "pointer", fontSize: 13, fontWeight: page === p ? 600 : 400, color: page === p ? "#1a3c5e" : "#777", padding: "4px 16px", letterSpacing: "0.2px", transition: "color 0.15s" }}>{label}</button>
+            <button key={p} onClick={() => setPage(p)} style={{ background: "none", border: "none", cursor: "pointer", fontSize: 13, fontWeight: page === p ? 600 : 400, color: page === p ? "#1a3c5e" : "#777", padding: "4px 14px", letterSpacing: "0.2px", transition: "color 0.15s" }}>{label}</button>
           ))}
-          <div style={{ width: 1, height: 20, background: "#e0e0e0", margin: "0 16px" }} />
-          <button onClick={() => setPage("alerts")} style={{ background: "none", color: "#1a3c5e", border: "1px solid #1a3c5e", borderRadius: 5, padding: "9px 20px", cursor: "pointer", fontSize: 13, fontWeight: 600, letterSpacing: "0.2px", transition: "all 0.15s" }}
+          <div style={{ width: 1, height: 20, background: "#e0e0e0", margin: "0 14px" }} />
+          <button onClick={() => setPage("alerts")} style={{ background: "none", color: "#1a3c5e", border: "1px solid #1a3c5e", borderRadius: 5, padding: "9px 18px", cursor: "pointer", fontSize: 13, fontWeight: 600, transition: "all 0.15s" }}
             onMouseEnter={e => { e.currentTarget.style.background = "#1a3c5e"; e.currentTarget.style.color = "white"; }}
             onMouseLeave={e => { e.currentTarget.style.background = "none"; e.currentTarget.style.color = "#1a3c5e"; }}>
             Join alerts
           </button>
         </div>
+
+        {/* Mobile hamburger */}
+        <button className="mobile-menu-btn" onClick={() => setMenuOpen(!menuOpen)} style={{ display: "none", background: "none", border: "none", cursor: "pointer", padding: 8 }}>
+          {menuOpen ? (
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M4 4L18 18M18 4L4 18" stroke="#1a3c5e" strokeWidth="1.8" strokeLinecap="round"/></svg>
+          ) : (
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 6H19M3 11H19M3 16H19" stroke="#1a3c5e" strokeWidth="1.8" strokeLinecap="round"/></svg>
+          )}
+        </button>
       </div>
+
+      {/* Mobile dropdown menu */}
+      {menuOpen && (
+        <div style={{ borderTop: "1px solid #ebebeb", background: "white", padding: "12px 0 20px" }}>
+          {[["home","All Deals"], ["r2r","Rent to Rent (R2R)"], ["bmv","Below Market Value (BMV)"], ["btl","Buy to Let (BTL)"], ["brrr","BRRR Strategy"]].map(([p, label]) => (
+            <button key={p} onClick={() => { setPage(p); setMenuOpen(false); }} style={{ display: "block", width: "100%", background: page === p ? "#f0f4f8" : "none", border: "none", cursor: "pointer", fontSize: 15, fontWeight: page === p ? 600 : 400, color: page === p ? "#1a3c5e" : "#444", padding: "12px 5%", textAlign: "left", letterSpacing: "0.1px" }}>{label}</button>
+          ))}
+          <div style={{ padding: "12px 5% 0" }}>
+            <button onClick={() => { setPage("alerts"); setMenuOpen(false); }} style={{ width: "100%", background: "#1a3c5e", color: "white", border: "none", borderRadius: 8, padding: "13px", cursor: "pointer", fontSize: 14, fontWeight: 600 }}>
+              Join Deal Alerts
+            </button>
+          </div>
+        </div>
+      )}
     </nav>
   );
 }
@@ -168,10 +195,10 @@ function Hero({ setPage }) {
       <div style={{ height: 1, background: "#ebebeb" }} />
 
       {/* Main hero grid */}
-      <div style={{ flex: 1, display: "grid", gridTemplateColumns: "1fr 1fr", maxWidth: 1200, margin: "0 auto", width: "100%", padding: "0 5%" }}>
+      <div className="hero-grid" style={{ flex: 1, display: "grid", gridTemplateColumns: "1fr 1fr", maxWidth: 1200, margin: "0 auto", width: "100%", padding: "0 5%" }}>
 
         {/* Left — copy */}
-        <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", padding: "80px 64px 80px 0", borderRight: "1px solid #ebebeb" }}>
+        <div className="hero-left" style={{ display: "flex", flexDirection: "column", justifyContent: "center", padding: "80px 64px 80px 0", borderRight: "1px solid #ebebeb" }}>
 
           {/* Live pill */}
           <div style={{ display: "inline-flex", alignItems: "center", gap: 8, marginBottom: 40 }}>
@@ -180,7 +207,7 @@ function Hero({ setPage }) {
           </div>
 
           {/* Headline */}
-          <h1 style={{ fontFamily: "'Georgia', 'Times New Roman', serif", fontSize: "clamp(40px, 4.5vw, 68px)", fontWeight: 400, color: "#111", lineHeight: 1.05, margin: "0 0 28px", letterSpacing: "-2px" }}>
+          <h1 style={{ fontFamily: "'Georgia', 'Times New Roman', serif", fontSize: "clamp(36px, 4.5vw, 68px)", fontWeight: 400, color: "#111", lineHeight: 1.05, margin: "0 0 28px", letterSpacing: "-2px" }}>
             Off-market<br />property deals<br />
             <span style={{ fontStyle: "italic", color: "#1a3c5e" }}>for serious<br />investors.</span>
           </h1>
@@ -192,7 +219,7 @@ function Hero({ setPage }) {
           <div style={{ border: "1px solid #e0e0e0", borderRadius: 8, padding: "20px 24px", marginBottom: 36, background: "#fafafa", maxWidth: 420 }}>
             <p style={{ fontSize: 12, fontWeight: 600, color: "#1a3c5e", letterSpacing: "1px", textTransform: "uppercase", margin: "0 0 6px" }}>Deal alerts</p>
             <p style={{ fontSize: 15, color: "#333", margin: "0 0 16px", lineHeight: 1.5, fontWeight: 400 }}>Subscribe to receive bespoke deals direct to your inbox — before they go public.</p>
-            <div style={{ display: "flex", gap: 8 }}>
+            <div className="subscribe-row" style={{ display: "flex", gap: 8 }}>
               <input type="email" placeholder="Your email address" style={{ flex: 1, border: "1px solid #ddd", borderRadius: 5, padding: "10px 14px", fontSize: 13, outline: "none", background: "white", fontFamily: "inherit", minWidth: 0 }} />
               <button onClick={() => setPage("alerts")} style={{ background: "#1a3c5e", color: "white", border: "none", borderRadius: 5, padding: "10px 18px", cursor: "pointer", fontSize: 13, fontWeight: 600, whiteSpace: "nowrap", transition: "opacity 0.15s" }}
                 onMouseEnter={e => e.currentTarget.style.opacity = "0.85"}
@@ -216,17 +243,15 @@ function Hero({ setPage }) {
         </div>
 
         {/* Right — image + floating card */}
-        <div style={{ position: "relative", display: "flex", alignItems: "stretch" }}>
+        <div className="hero-image-col" style={{ position: "relative", display: "flex", alignItems: "stretch" }}>
           <div style={{ position: "absolute", inset: 0, overflow: "hidden" }}>
             <img
               src="https://images.unsplash.com/photo-1560185007-cde436f6a4d0?w=1000&q=85"
               alt="Premium property"
               style={{ width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.92)" }}
             />
-            {/* Subtle white fade on left edge to blend with border */}
             <div style={{ position: "absolute", top: 0, left: 0, bottom: 0, width: 40, background: "linear-gradient(to right, white, transparent)" }} />
           </div>
-
           {/* Floating stats card */}
           <div style={{ position: "absolute", bottom: 48, left: -24, background: "white", border: "1px solid #ebebeb", borderRadius: 12, padding: "24px 28px", boxShadow: "0 8px 40px rgba(0,0,0,0.08)", zIndex: 2 }}>
             <div style={{ display: "flex", gap: 32 }}>
@@ -273,7 +298,7 @@ function CategoryGrid({ setPage }) {
           <p style={{ fontSize: 13, fontWeight: 600, color: "#1a3c5e", letterSpacing: "1.5px", textTransform: "uppercase", marginBottom: 12 }}>Investment Strategies</p>
           <h2 style={{ fontFamily: "'Georgia', serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 700, color: "#1a1a1a", letterSpacing: "-0.8px", margin: 0 }}>Four paths to property profit</h2>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 24 }}>
+        <div className="category-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 24 }}>
           {CATEGORIES.map(cat => (
             <div key={cat.type} onClick={() => setPage(cat.type.toLowerCase())} style={{ background: "white", borderRadius: 16, padding: "32px 28px", cursor: "pointer", border: "1px solid #e8e8e8", transition: "all 0.25s", position: "relative", overflow: "hidden" }}
               onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.boxShadow = "0 16px 48px rgba(26,60,94,0.12)"; e.currentTarget.style.borderColor = cat.color; }}
@@ -330,7 +355,7 @@ function DealCard({ deal, onClick }) {
 
 function FilterBar({ filters, setFilters }) {
   return (
-    <div style={{ background: "white", borderRadius: 14, padding: "20px 24px", border: "1px solid #e8e8e8", marginBottom: 32, display: "flex", gap: 16, flexWrap: "wrap", alignItems: "center" }}>
+    <div style={{ background: "white", borderRadius: 14, padding: "20px 24px", border: "1px solid #e8e8e8", marginBottom: 32, display: "flex", gap: 16, flexWrap: "wrap", alignItems: "center" }} className="filter-bar">
       <input value={filters.search} onChange={e => setFilters(f => ({ ...f, search: e.target.value }))} placeholder="Search deals..." style={{ flex: "1 1 200px", border: "1px solid #e0e0e0", borderRadius: 8, padding: "10px 14px", fontSize: 14, outline: "none", minWidth: 160 }} />
       <select value={filters.area} onChange={e => setFilters(f => ({ ...f, area: e.target.value }))} style={{ border: "1px solid #e0e0e0", borderRadius: 8, padding: "10px 14px", fontSize: 14, background: "white", color: "#333", minWidth: 140 }}>
         <option value="">All Areas</option>
@@ -383,7 +408,7 @@ function DealsPage({ typeFilter, setActiveDeal }) {
           <p style={{ fontSize: 18 }}>No deals match your criteria.</p>
         </div>
       ) : (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: 24 }}>
+        <div className="deals-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: 24 }}>
           {filtered.map(deal => <DealCard key={deal.id} deal={deal} onClick={() => setActiveDeal(deal)} />)}
         </div>
       )}
@@ -409,13 +434,13 @@ function InquiryForm({ deal }) {
   return (
     <div>
       <h3 style={{ fontFamily: "'Georgia', serif", fontSize: 20, fontWeight: 700, color: "#1a1a1a", margin: "0 0 24px" }}>Register Interest</h3>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginBottom: 14 }}>
+      <div className="form-grid-2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginBottom: 14 }}>
         <div><label style={labelStyle}>Full Name *</label><input value={form.name} onChange={set("name")} placeholder="John Smith" style={inputStyle} /></div>
         <div><label style={labelStyle}>Email *</label><input value={form.email} onChange={set("email")} placeholder="john@example.com" type="email" style={inputStyle} /></div>
         <div><label style={labelStyle}>Phone</label><input value={form.phone} onChange={set("phone")} placeholder="+44 7700..." style={inputStyle} /></div>
         <div><label style={labelStyle}>WhatsApp</label><input value={form.whatsapp} onChange={set("whatsapp")} placeholder="+44 7700..." style={inputStyle} /></div>
       </div>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginBottom: 14 }}>
+      <div className="form-grid-2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginBottom: 14 }}>
         <div><label style={labelStyle}>Contact Preference</label>
           <select value={form.contactPref} onChange={set("contactPref")} style={{ ...inputStyle }}>
             <option value="">Select...</option>
@@ -457,7 +482,7 @@ function DealDetailPage({ deal, setPage }) {
     <div style={{ background: "#f7f8fc", minHeight: "100vh", paddingTop: 72 }}>
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "40px 5%" }}>
         <button onClick={() => setPage("deals")} style={{ background: "white", border: "1px solid #e0e0e0", borderRadius: 8, padding: "8px 16px", cursor: "pointer", fontSize: 14, color: "#555", marginBottom: 28, display: "flex", alignItems: "center", gap: 6 }}>← Back to Deals</button>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 400px", gap: 32, alignItems: "start" }}>
+        <div className="deal-detail-grid" style={{ display: "grid", gridTemplateColumns: "1fr 400px", gap: 32, alignItems: "start" }}>
           <div>
             <div style={{ background: "white", borderRadius: 16, overflow: "hidden", border: "1px solid #e8e8e8", marginBottom: 24 }}>
               <img src={deal.image} alt={deal.title} style={{ width: "100%", height: 340, objectFit: "cover" }} />
@@ -472,7 +497,7 @@ function DealDetailPage({ deal, setPage }) {
                 </span>
               </div>
               <h1 style={{ fontFamily: "'Georgia', serif", fontSize: 30, fontWeight: 700, color: "#1a1a1a", margin: "0 0 16px", letterSpacing: "-0.5px" }}>{deal.title}</h1>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12, marginBottom: 24 }}>
+              <div className="deal-metrics" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12, marginBottom: 24 }}>
                 {[["ROI", `${deal.roi}%`, "#1e5c3a", "#e8f5ee"], ["Annual Yield", `${deal.yield}%`, "#4a2c6e", "#f0eaf8"], ["Monthly Cashflow", `£${deal.cashflow}`, "#1a3c5e", "#e8f0f8"]].map(([l, v, c, bg]) => (
                   <div key={l} style={{ background: bg, borderRadius: 12, padding: "16px 14px", textAlign: "center" }}>
                     <div style={{ fontSize: 12, color: c, fontWeight: 600, marginBottom: 4, opacity: 0.7 }}>{l}</div>
@@ -483,7 +508,7 @@ function DealDetailPage({ deal, setPage }) {
               <h2 style={{ fontFamily: "'Georgia', serif", fontSize: 18, fontWeight: 700, color: "#1a1a1a", margin: "0 0 10px" }}>Overview</h2>
               <p style={{ fontSize: 15, color: "#555", lineHeight: 1.75, margin: 0 }}>{deal.description}</p>
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24 }}>
+            <div className="deal-bottom-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24 }}>
               <div style={{ background: "white", borderRadius: 16, padding: "24px", border: "1px solid #e8e8e8" }}>
                 <h2 style={{ fontFamily: "'Georgia', serif", fontSize: 18, fontWeight: 700, color: "#1a1a1a", margin: "0 0 16px" }}>Financial Breakdown</h2>
                 {[["Monthly Gross Rent", `£${deal.financials.monthlyRent.toLocaleString()}`], ["Management Fees", `£${deal.financials.managementFees.toLocaleString()}`], ["Net Monthly Income", `£${deal.financials.netMonthly.toLocaleString()}`], ["Annual Return", `£${deal.financials.annualReturn.toLocaleString()}`], ["Setup / Purchase Cost", `£${deal.financials.setupCosts.toLocaleString()}`]].map(([l, v], i) => (
@@ -506,7 +531,7 @@ function DealDetailPage({ deal, setPage }) {
               </div>
             </div>
           </div>
-          <div style={{ position: "sticky", top: 88 }}>
+          <div className="deal-sticky" style={{ position: "sticky", top: 88 }}>
             <div style={{ background: "white", borderRadius: 16, padding: "28px", border: "1px solid #e8e8e8" }}>
               <InquiryForm deal={deal} />
             </div>
@@ -547,7 +572,7 @@ function AlertsPage() {
       </div>
       <div style={{ maxWidth: 680, margin: "-40px auto 60px", padding: "0 5%", position: "relative", zIndex: 1 }}>
         <div style={{ background: "white", borderRadius: 20, padding: "40px", border: "1px solid #e8e8e8" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 16 }}>
+          <div className="alerts-form-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 16 }}>
             <div><label style={labelStyle}>Full Name *</label><input value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} style={inputStyle} /></div>
             <div><label style={labelStyle}>Email *</label><input value={form.email} onChange={e => setForm(f => ({ ...f, email: e.target.value }))} type="email" style={inputStyle} /></div>
             <div><label style={labelStyle}>Phone</label><input value={form.phone} onChange={e => setForm(f => ({ ...f, phone: e.target.value }))} style={inputStyle} /></div>
@@ -603,9 +628,9 @@ function HowItWorks() {
           <p style={{ fontSize: 13, fontWeight: 600, color: "#1a3c5e", letterSpacing: "1.5px", textTransform: "uppercase", marginBottom: 12 }}>The Process</p>
           <h2 style={{ fontFamily: "'Georgia', serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 700, color: "#1a1a1a", letterSpacing: "-0.8px", margin: 0 }}>From sourcing to cashflow</h2>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 2, position: "relative" }}>
+        <div className="hiw-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 2, position: "relative" }}>
           {steps.map((s, i) => (
-            <div key={s.n} style={{ background: "white", padding: "32px 28px", border: "1px solid #e8e8e8", borderRadius: i === 0 ? "14px 0 0 14px" : i === 3 ? "0 14px 14px 0" : 0 }}>
+            <div key={s.n} className={`hiw-step`} style={{ background: "white", padding: "32px 28px", border: "1px solid #e8e8e8", borderRadius: i === 0 ? "14px 0 0 14px" : i === 3 ? "0 14px 14px 0" : 0 }}>
               <div style={{ fontFamily: "'Georgia', serif", fontSize: 40, fontWeight: 700, color: "#e8e8e8", marginBottom: 12, lineHeight: 1 }}>{s.n}</div>
               <h3 style={{ fontFamily: "'Georgia', serif", fontSize: 18, fontWeight: 700, color: "#1a1a1a", margin: "0 0 10px" }}>{s.title}</h3>
               <p style={{ fontSize: 14, color: "#666", lineHeight: 1.65, margin: 0 }}>{s.body}</p>
@@ -620,7 +645,7 @@ function HowItWorks() {
 function WhyTPS() {
   return (
     <section style={{ padding: "88px 5%", background: "white" }}>
-      <div style={{ maxWidth: 1200, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64, alignItems: "center" }}>
+      <div style={{ maxWidth: 1200, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64, alignItems: "center" }} className="whytps-grid">
         <div>
           <p style={{ fontSize: 13, fontWeight: 600, color: "#1a3c5e", letterSpacing: "1.5px", textTransform: "uppercase", marginBottom: 16 }}>Why TPS Group</p>
           <h2 style={{ fontFamily: "'Georgia', serif", fontSize: "clamp(28px, 4vw, 42px)", fontWeight: 700, color: "#1a1a1a", letterSpacing: "-0.8px", margin: "0 0 24px", lineHeight: 1.15 }}>Institutional deal flow for the private investor</h2>
@@ -634,7 +659,7 @@ function WhyTPS() {
             </div>
           ))}
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+        <div className="whytps-stats" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
           {[["£18M+", "Capital placed for investors"], ["240+", "Deals sourced to date"], ["94%", "Client retention rate"], ["8 yrs", "Track record in UK property"]].map(([num, label]) => (
             <div key={label} style={{ background: "#f7f8fc", borderRadius: 16, padding: "28px 20px", textAlign: "center", border: "1px solid #e8e8e8" }}>
               <div style={{ fontFamily: "'Georgia', serif", fontSize: 36, fontWeight: 700, color: "#1a3c5e", margin: "0 0 6px" }}>{num}</div>
@@ -666,8 +691,8 @@ function Footer({ setPage }) {
   return (
     <footer style={{ background: "#0d2137", padding: "56px 5% 32px" }}>
       <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr", gap: 48, marginBottom: 48, flexWrap: "wrap" }}>
-          <div>
+        <div className="footer-grid" style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr", gap: 48, marginBottom: 48, flexWrap: "wrap" }}>
+          <div className="footer-brand">
             <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
               <TPSLogo size={38} dark />
               <div>
@@ -728,7 +753,74 @@ export default function App() {
 
   return (
     <div style={{ fontFamily: "'Palatino Linotype', 'Book Antiqua', Georgia, serif", minHeight: "100vh", background: "white" }}>
-      <style>{`* { box-sizing: border-box; } body { margin: 0; } input, select, textarea, button { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; } img { display: block; } @media (max-width: 768px) { nav > div > div:last-child { display: none; } }`}</style>
+      <style>{`
+        * { box-sizing: border-box; }
+        body { margin: 0; }
+        input, select, textarea, button { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+        img { display: block; }
+
+        /* Desktop nav visible, hamburger hidden */
+        .desktop-nav { display: flex !important; }
+        .mobile-menu-btn { display: none !important; }
+
+        @media (max-width: 768px) {
+          .desktop-nav { display: none !important; }
+          .mobile-menu-btn { display: flex !important; }
+
+          /* Hero: stack columns */
+          .hero-grid { grid-template-columns: 1fr !important; }
+          .hero-image-col { display: none !important; }
+          .hero-left { padding: 40px 0 48px !important; border-right: none !important; }
+          .hero-ticker { overflow-x: auto; white-space: nowrap; }
+          .hero-stats-card { left: 50% !important; transform: translateX(-50%); bottom: 24px !important; width: 90% !important; }
+
+          /* Category grid: 2 cols on mobile */
+          .category-grid { grid-template-columns: 1fr 1fr !important; gap: 12px !important; }
+
+          /* Deal cards: single col */
+          .deals-grid { grid-template-columns: 1fr !important; }
+
+          /* Deal detail: stack */
+          .deal-detail-grid { grid-template-columns: 1fr !important; }
+          .deal-sticky { position: static !important; }
+          .deal-metrics { grid-template-columns: 1fr 1fr 1fr !important; }
+          .deal-bottom-grid { grid-template-columns: 1fr !important; }
+
+          /* Inquiry form: single col */
+          .form-grid-2 { grid-template-columns: 1fr !important; }
+
+          /* WhyTPS: stack */
+          .whytps-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+          .whytps-stats { grid-template-columns: 1fr 1fr !important; }
+
+          /* How it works: stack */
+          .hiw-grid { grid-template-columns: 1fr !important; gap: 0 !important; }
+          .hiw-step:first-child { border-radius: 14px 14px 0 0 !important; }
+          .hiw-step:last-child { border-radius: 0 0 14px 14px !important; }
+          .hiw-step { border-radius: 0 !important; }
+
+          /* Footer: stack */
+          .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 32px !important; }
+          .footer-brand { grid-column: 1 / -1 !important; }
+
+          /* Alerts form */
+          .alerts-form-grid { grid-template-columns: 1fr !important; }
+
+          /* Filter bar */
+          .filter-bar { flex-direction: column !important; }
+          .filter-bar > * { width: 100% !important; }
+
+          /* Subscribe banner input row */
+          .subscribe-row { flex-direction: column !important; }
+          .subscribe-row input { width: 100% !important; }
+          .subscribe-row button { width: 100% !important; }
+        }
+
+        @media (max-width: 480px) {
+          .category-grid { grid-template-columns: 1fr !important; }
+          .deal-metrics { grid-template-columns: 1fr 1fr !important; }
+        }
+      `}</style>
       <NavBar page={page} setPage={handleSetPage} />
       {page === "home" && <>
         <Hero setPage={handleSetPage} />
