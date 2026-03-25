@@ -61,13 +61,14 @@ const DEALS = [
     location: "Lenton, Nottingham, NG7",
     image: "https://images.unsplash.com/photo-1599427303058-f04cbcf4756f?w=800&q=80",
   },
-   id: 7, type: "R2R", title: "London  14-Bed HMO — Premium Rooms",
-    area: "Brixton", price: 15400, roi: 26, yield: 21, cashflow: 1680,
+  {
+    id: 7, type: "R2R", title: "London 14-Bed HMO — Premium Rooms",
+    area: "London", price: 15400, roi: 26, yield: 21, cashflow: 1680,
     status: "Available", beds: 14, bathrooms: 14,
     description: "High-spec R2R in sought-after Brixton. All rooms en-suite. Fully furnished to luxury standard.",
-    highlights: ["All en-suite rooms", "Luxury furnishing included", "Premium room rates"],
+    highlights: ["All en-suite rooms", "Luxury furnishing included", "Premium room rates", "Prime Brixton location"],
     financials: { monthlyRent: 15400, managementFees: 1040, netMonthly: 1680, annualReturn: 20160, setupCosts: 110000 },
-    location: "brixton, London, SW2",
+    location: "Brixton, London, SW2",
     image: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=800&q=80",
   },
 ];
@@ -127,17 +128,11 @@ const statusColors = { Available: { bg: "#e8f5ee", text: "#1e5c3a" }, "Under Off
 
 function TPSLogo({ size = 38, dark = false }) {
   const s = size;
-  const half = s / 2;
-  const r = s * 0.22;
   return (
     <svg width={s} height={s} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-      {/* Blue circle — top left */}
       <circle cx="36" cy="28" r="18" fill="#4BAEE8" />
-      {/* Yellow circle — top right */}
       <circle cx="62" cy="24" r="15" fill="#F5B800" />
-      {/* Green shape — bottom left (person body) */}
       <ellipse cx="36" cy="62" rx="18" ry="16" fill="#2EC98E" />
-      {/* Navy teardrop — bottom right, pointing down */}
       <path d="M62 42 C72 42 80 50 80 60 C80 72 62 86 62 86 C62 86 44 72 44 60 C44 50 52 42 62 42Z" fill="#1a3c5e" />
     </svg>
   );
@@ -148,7 +143,6 @@ function NavBar({ page, setPage }) {
   return (
     <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, background: "white", borderBottom: "1px solid #ebebeb", padding: "0 5%" }}>
       <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", height: 64 }}>
-        {/* Logo */}
         <div style={{ cursor: "pointer", display: "flex", alignItems: "center", gap: 10 }} onClick={() => { setPage("home"); setMenuOpen(false); }}>
           <TPSLogo size={32} />
           <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
@@ -156,8 +150,6 @@ function NavBar({ page, setPage }) {
             <span style={{ fontSize: 9, color: "#999", letterSpacing: "0.3px", fontWeight: 400 }}>The Property Source Group</span>
           </div>
         </div>
-
-        {/* Desktop nav */}
         <div className="desktop-nav" style={{ display: "flex", gap: 0, alignItems: "center" }}>
           {[["home","Deals"], ["r2r","R2R"], ["bmv","BMV"], ["btl","BTL"], ["brrr","BRRR"]].map(([p, label]) => (
             <button key={p} onClick={() => setPage(p)} style={{ background: "none", border: "none", cursor: "pointer", fontSize: 13, fontWeight: page === p ? 600 : 400, color: page === p ? "#1a3c5e" : "#777", padding: "4px 14px", letterSpacing: "0.2px", transition: "color 0.15s" }}>{label}</button>
@@ -169,8 +161,6 @@ function NavBar({ page, setPage }) {
             Join alerts
           </button>
         </div>
-
-        {/* Mobile hamburger */}
         <button className="mobile-menu-btn" onClick={() => setMenuOpen(!menuOpen)} style={{ display: "none", background: "none", border: "none", cursor: "pointer", padding: 8 }}>
           {menuOpen ? (
             <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M4 4L18 18M18 4L4 18" stroke="#1a3c5e" strokeWidth="1.8" strokeLinecap="round"/></svg>
@@ -179,8 +169,6 @@ function NavBar({ page, setPage }) {
           )}
         </button>
       </div>
-
-      {/* Mobile dropdown menu */}
       {menuOpen && (
         <div style={{ borderTop: "1px solid #ebebeb", background: "white", padding: "12px 0 20px" }}>
           {[["home","All Deals"], ["r2r","Rent to Rent (R2R)"], ["bmv","Below Market Value (BMV)"], ["btl","Buy to Let (BTL)"], ["brrr","BRRR Strategy"]].map(([p, label]) => (
@@ -200,31 +188,18 @@ function NavBar({ page, setPage }) {
 function Hero({ setPage }) {
   return (
     <section style={{ background: "#fff", paddingTop: 72, minHeight: "100vh", display: "flex", flexDirection: "column" }}>
-      {/* Top rule */}
       <div style={{ height: 1, background: "#ebebeb" }} />
-
-      {/* Main hero grid */}
       <div className="hero-grid" style={{ flex: 1, display: "grid", gridTemplateColumns: "1fr 1fr", maxWidth: 1200, margin: "0 auto", width: "100%", padding: "0 5%" }}>
-
-        {/* Left — copy */}
         <div className="hero-left" style={{ display: "flex", flexDirection: "column", justifyContent: "center", padding: "80px 64px 80px 0", borderRight: "1px solid #ebebeb" }}>
-
-          {/* Live pill */}
           <div style={{ display: "inline-flex", alignItems: "center", gap: 8, marginBottom: 40 }}>
             <span style={{ width: 7, height: 7, background: "#2EC98E", borderRadius: "50%", display: "inline-block" }} />
             <span style={{ fontSize: 12, fontWeight: 500, color: "#888", letterSpacing: "0.8px", textTransform: "uppercase" }}>Live deals updated daily</span>
           </div>
-
-          {/* Headline */}
           <h1 style={{ fontFamily: "'Georgia', 'Times New Roman', serif", fontSize: "clamp(36px, 4.5vw, 68px)", fontWeight: 400, color: "#111", lineHeight: 1.05, margin: "0 0 28px", letterSpacing: "-2px" }}>
             Off-market<br />property deals<br />
             <span style={{ fontStyle: "italic", color: "#1a3c5e" }}>for serious<br />investors.</span>
           </h1>
-
-          {/* Divider */}
           <div style={{ width: 40, height: 1, background: "#1a3c5e", margin: "0 0 28px" }} />
-
-          {/* Subscribe banner */}
           <div style={{ border: "1px solid #e0e0e0", borderRadius: 8, padding: "20px 24px", marginBottom: 36, background: "#fafafa", maxWidth: 420 }}>
             <p style={{ fontSize: 12, fontWeight: 600, color: "#1a3c5e", letterSpacing: "1px", textTransform: "uppercase", margin: "0 0 6px" }}>Deal alerts</p>
             <p style={{ fontSize: 15, color: "#333", margin: "0 0 16px", lineHeight: 1.5, fontWeight: 400 }}>Subscribe to receive bespoke deals direct to your inbox — before they go public.</p>
@@ -250,18 +225,11 @@ function Hero({ setPage }) {
             </button>
           </div>
         </div>
-
-        {/* Right — image + floating card */}
         <div className="hero-image-col" style={{ position: "relative", display: "flex", alignItems: "stretch" }}>
           <div style={{ position: "absolute", inset: 0, overflow: "hidden" }}>
-            <img
-              src="https://images.unsplash.com/photo-1560185007-cde436f6a4d0?w=1000&q=85"
-              alt="Premium property"
-              style={{ width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.92)" }}
-            />
+            <img src="https://images.unsplash.com/photo-1560185007-cde436f6a4d0?w=1000&q=85" alt="Premium property" style={{ width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.92)" }} />
             <div style={{ position: "absolute", top: 0, left: 0, bottom: 0, width: 40, background: "linear-gradient(to right, white, transparent)" }} />
           </div>
-          {/* Floating stats card */}
           <div style={{ position: "absolute", bottom: 48, left: -24, background: "white", border: "1px solid #ebebeb", borderRadius: 12, padding: "24px 28px", boxShadow: "0 8px 40px rgba(0,0,0,0.08)", zIndex: 2 }}>
             <div style={{ display: "flex", gap: 32 }}>
               {[["240+", "Deals sourced"], ["£18M+", "Capital placed"], ["94%", "Retention rate"]].map(([num, label]) => (
@@ -274,8 +242,6 @@ function Hero({ setPage }) {
           </div>
         </div>
       </div>
-
-      {/* Bottom strategy ticker */}
       <div style={{ borderTop: "1px solid #ebebeb", padding: "0 5%" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", alignItems: "center", height: 56, gap: 0 }}>
           <span style={{ fontSize: 11, fontWeight: 600, color: "#aaa", letterSpacing: "1.2px", textTransform: "uppercase", marginRight: 32, whiteSpace: "nowrap" }}>Strategies</span>
@@ -316,9 +282,7 @@ function CategoryGrid({ setPage }) {
               <div style={{ display: "inline-block", background: cat.light, color: cat.color, fontSize: 11, fontWeight: 700, letterSpacing: "1px", textTransform: "uppercase", borderRadius: 6, padding: "4px 10px", marginBottom: 12 }}>{cat.type}</div>
               <h3 style={{ fontFamily: "'Georgia', serif", fontSize: 20, fontWeight: 700, color: "#1a1a1a", margin: "0 0 10px", letterSpacing: "-0.3px" }}>{cat.label}</h3>
               <p style={{ fontSize: 14, color: "#666", lineHeight: 1.6, margin: 0 }}>{cat.description}</p>
-              <div style={{ marginTop: 24, display: "flex", alignItems: "center", gap: 6, color: cat.color, fontSize: 14, fontWeight: 600 }}>
-                View deals <span>→</span>
-              </div>
+              <div style={{ marginTop: 24, display: "flex", alignItems: "center", gap: 6, color: cat.color, fontSize: 14, fontWeight: 600 }}>View deals <span>→</span></div>
             </div>
           ))}
         </div>
@@ -368,7 +332,7 @@ function FilterBar({ filters, setFilters }) {
       <input value={filters.search} onChange={e => setFilters(f => ({ ...f, search: e.target.value }))} placeholder="Search deals..." style={{ flex: "1 1 200px", border: "1px solid #e0e0e0", borderRadius: 8, padding: "10px 14px", fontSize: 14, outline: "none", minWidth: 160 }} />
       <select value={filters.area} onChange={e => setFilters(f => ({ ...f, area: e.target.value }))} style={{ border: "1px solid #e0e0e0", borderRadius: 8, padding: "10px 14px", fontSize: 14, background: "white", color: "#333", minWidth: 140 }}>
         <option value="">All Areas</option>
-        {["Manchester","Leeds","Liverpool","Sheffield","Birmingham","Nottingham"].map(a => <option key={a}>{a}</option>)}
+        {["Manchester","Leeds","Liverpool","Sheffield","Birmingham","Nottingham","London"].map(a => <option key={a}>{a}</option>)}
       </select>
       <select value={filters.minRoi} onChange={e => setFilters(f => ({ ...f, minRoi: e.target.value }))} style={{ border: "1px solid #e0e0e0", borderRadius: 8, padding: "10px 14px", fontSize: 14, background: "white", color: "#333", minWidth: 130 }}>
         <option value="">Min ROI</option>
@@ -546,7 +510,7 @@ function DealDetailPage({ deal, setPage }) {
             </div>
             <div style={{ background: "#1a3c5e", borderRadius: 16, padding: "24px", marginTop: 16, textAlign: "center" }}>
               <p style={{ color: "rgba(255,255,255,0.7)", fontSize: 13, margin: "0 0 6px" }}>Need help fast?</p>
-              <p style={{ color: "white", fontWeight: 700, fontSize: 16, margin: "0 0 4px", fontFamily: "'Georgia', serif" }}>0800 123 4567</p>
+              <p style={{ color: "white", fontWeight: 700, fontSize: 16, margin: "0 0 4px", fontFamily: "'Georgia', serif" }}>020 3092 4452</p>
               <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 12, margin: 0 }}>Mon–Fri 9am–6pm</p>
             </div>
           </div>
@@ -639,7 +603,7 @@ function HowItWorks() {
         </div>
         <div className="hiw-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 2, position: "relative" }}>
           {steps.map((s, i) => (
-            <div key={s.n} className={`hiw-step`} style={{ background: "white", padding: "32px 28px", border: "1px solid #e8e8e8", borderRadius: i === 0 ? "14px 0 0 14px" : i === 3 ? "0 14px 14px 0" : 0 }}>
+            <div key={s.n} className="hiw-step" style={{ background: "white", padding: "32px 28px", border: "1px solid #e8e8e8", borderRadius: i === 0 ? "14px 0 0 14px" : i === 3 ? "0 14px 14px 0" : 0 }}>
               <div style={{ fontFamily: "'Georgia', serif", fontSize: 40, fontWeight: 700, color: "#e8e8e8", marginBottom: 12, lineHeight: 1 }}>{s.n}</div>
               <h3 style={{ fontFamily: "'Georgia', serif", fontSize: 18, fontWeight: 700, color: "#1a1a1a", margin: "0 0 10px" }}>{s.title}</h3>
               <p style={{ fontSize: 14, color: "#666", lineHeight: 1.65, margin: 0 }}>{s.body}</p>
@@ -767,64 +731,36 @@ export default function App() {
         body { margin: 0; }
         input, select, textarea, button { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
         img { display: block; }
-
-        /* Desktop nav visible, hamburger hidden */
         .desktop-nav { display: flex !important; }
         .mobile-menu-btn { display: none !important; }
-
         @media (max-width: 768px) {
           .desktop-nav { display: none !important; }
           .mobile-menu-btn { display: flex !important; }
-
-          /* Hero: stack columns */
           .hero-grid { grid-template-columns: 1fr !important; }
           .hero-image-col { display: none !important; }
           .hero-left { padding: 40px 0 48px !important; border-right: none !important; }
-          .hero-ticker { overflow-x: auto; white-space: nowrap; }
-          .hero-stats-card { left: 50% !important; transform: translateX(-50%); bottom: 24px !important; width: 90% !important; }
-
-          /* Category grid: 2 cols on mobile */
           .category-grid { grid-template-columns: 1fr 1fr !important; gap: 12px !important; }
-
-          /* Deal cards: single col */
           .deals-grid { grid-template-columns: 1fr !important; }
-
-          /* Deal detail: stack */
           .deal-detail-grid { grid-template-columns: 1fr !important; }
           .deal-sticky { position: static !important; }
           .deal-metrics { grid-template-columns: 1fr 1fr 1fr !important; }
           .deal-bottom-grid { grid-template-columns: 1fr !important; }
-
-          /* Inquiry form: single col */
           .form-grid-2 { grid-template-columns: 1fr !important; }
-
-          /* WhyTPS: stack */
           .whytps-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
           .whytps-stats { grid-template-columns: 1fr 1fr !important; }
-
-          /* How it works: stack */
           .hiw-grid { grid-template-columns: 1fr !important; gap: 0 !important; }
           .hiw-step:first-child { border-radius: 14px 14px 0 0 !important; }
           .hiw-step:last-child { border-radius: 0 0 14px 14px !important; }
           .hiw-step { border-radius: 0 !important; }
-
-          /* Footer: stack */
           .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 32px !important; }
           .footer-brand { grid-column: 1 / -1 !important; }
-
-          /* Alerts form */
           .alerts-form-grid { grid-template-columns: 1fr !important; }
-
-          /* Filter bar */
           .filter-bar { flex-direction: column !important; }
           .filter-bar > * { width: 100% !important; }
-
-          /* Subscribe banner input row */
           .subscribe-row { flex-direction: column !important; }
           .subscribe-row input { width: 100% !important; }
           .subscribe-row button { width: 100% !important; }
         }
-
         @media (max-width: 480px) {
           .category-grid { grid-template-columns: 1fr !important; }
           .deal-metrics { grid-template-columns: 1fr 1fr !important; }
