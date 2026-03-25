@@ -89,7 +89,7 @@ const DEALS = [
     annualReturn: 24000,
     setupCosts: 3500
   },
-    image: "https://i.ibb.co/YTY86mMm/il-340x270-6800524152-h68o-jpg.webp",,
+    image: "https://i.ibb.co/YTY86mMm/il-340x270-6800524152-h68o-jpg.webp",
 },
 ];
 
