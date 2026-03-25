@@ -62,7 +62,7 @@ const DEALS = [
     image: "https://images.unsplash.com/photo-1599427303058-f04cbcf4756f?w=800&q=80",
   },
   {
-  id: 8,
+  id: 7,
   type: "R2R",
   title: "Edgware Road 2-Bed Ground Floor",
   area: "London",
