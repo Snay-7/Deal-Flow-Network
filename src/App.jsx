@@ -719,7 +719,7 @@ function Footer({ setPage }) {
           ))}
           <div>
             <p style={{ fontSize: 13, fontWeight: 600, color: "rgba(255,255,255,0.9)", marginBottom: 16 }}>Contact</p>
-            <p style={{ fontSize: 14, color: "rgba(255,255,255,0.45)", marginBottom: 8 }}>0800 123 4567</p>
+            <p style={{ fontSize: 14, color: "rgba(255,255,255,0.45)", marginBottom: 8 }}>020 3092 4452</p>
             <p style={{ fontSize: 14, color: "rgba(255,255,255,0.45)", marginBottom: 8 }}>contact@thepropertysourcegroup.com</p>
             <p style={{ fontSize: 14, color: "rgba(255,255,255,0.45)" }}>Mon–Fri 9am–6pm</p>
           </div>
