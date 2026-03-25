@@ -21,79 +21,189 @@ async function sendToAirtable(fields) {
 
 const DEALS = [
   {
-    id: 1, type: "R2R", title: "Manchester City Centre HMO Portfolio",
-    area: "Manchester", price: 85000, roi: 22, yield: 18, cashflow: 1240,
-    status: "Available", beds: 6, bathrooms: 3,
-    description: "Premium R2R opportunity in the heart of Manchester. Fully licensed HMO with professional tenants in situ. Below market rent secured with compliant 5-year management agreement in place.",
-    highlights: ["5-year management agreement", "Fully licensed HMO", "Professional tenants in situ", "Below market rent secured"],
-    financials: { monthlyRent: 3800, managementFees: 760, netMonthly: 1240, annualReturn: 14880, setupCosts: 85000 },
-    location: "Manchester City Centre, M1",
-    image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80",
+    id: 1,
+    type: "R2R",
+    title: "Mayfair Serviced Apartment — Prime W1",
+    area: "London",
+    price: 6500,
+    roi: 68,
+    yield: 0,
+    cashflow: 4400,
+    status: "Available",
+    beds: 2,
+    bathrooms: 2,
+    description: "Exceptional serviced accommodation opportunity in the heart of Mayfair. Ground-floor Victorian conversion flat with period features retained. Landlord seeking professional R2R operator. Average nightly rate of £280 achievable year-round due to proximity to Bond Street, Hyde Park and corporate demand. Management agreement negotiable for 3 years.",
+    highlights: ["£280 average nightly rate", "3-year management agreement", "Steps from Bond Street tube", "Corporate & leisure demand"],
+    financials: { monthlyRent: 6500, managementFees: 1650, netMonthly: 4400, annualReturn: 52800, setupCosts: 6500 },
+    location: "Mayfair, London, W1K",
+    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80",
   },
   {
-    id: 2, type: "BMV", title: "Leeds Semi-Detached — 27% Below Market",
-    area: "Leeds", price: 118000, roi: 31, yield: 8.4, cashflow: 620,
-    status: "Available", beds: 3, bathrooms: 2,
-    description: "Motivated vendor sale. Full structural survey completed. Cosmetic refurbishment needed — excellent value-add opportunity. Comparable sold prices at £162,000.",
-    highlights: ["27% below market value", "Motivated vendor", "Survey completed", "£44K instant equity"],
-    financials: { monthlyRent: 1100, managementFees: 110, netMonthly: 620, annualReturn: 7440, setupCosts: 118000 },
-    location: "Headingley, Leeds, LS6",
-    image: "https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800&q=80",
+    id: 2,
+    type: "R2R",
+    title: "Kensington Studio Portfolio — SA Goldmine",
+    area: "London",
+    price: 9800,
+    roi: 54,
+    yield: 0,
+    cashflow: 5300,
+    status: "New",
+    beds: 3,
+    bathrooms: 3,
+    description: "Three adjoining studio flats in a white-stucco Kensington period conversion, available as a single R2R package. Ideal for serviced accommodation. The block is steps from Kensington High Street and the Royal Albert Hall. Combined short-let income averages £15,000/month in peak season. Landlord retiring — long-term operator preferred.",
+    highlights: ["3-unit package deal", "£15,000/mo peak season income", "White stucco period building", "Landlord prefers long-term operator"],
+    financials: { monthlyRent: 9800, managementFees: 2100, netMonthly: 5300, annualReturn: 63600, setupCosts: 9800 },
+    location: "Kensington, London, W8",
+    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80",
   },
   {
-    id: 3, type: "BTL", title: "Liverpool New Build Apartment — High Yield",
-    area: "Liverpool", price: 145000, roi: 14, yield: 7.8, cashflow: 495,
-    status: "Available", beds: 2, bathrooms: 1,
-    description: "Brand new apartment in regeneration hotspot. 10-year NHBC warranty. Hands-off investment with lettings management included. Strong rental demand from professionals.",
-    highlights: ["10-year NHBC warranty", "Lettings management included", "Regeneration area", "No refurbishment needed"],
-    financials: { monthlyRent: 1050, managementFees: 105, netMonthly: 495, annualReturn: 5940, setupCosts: 145000 },
-    location: "Baltic Triangle, Liverpool, L1",
-    image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80",
+    id: 3,
+    type: "R2R",
+    title: "Manchester City Centre 7-Bed HMO",
+    area: "Manchester",
+    price: 4800,
+    roi: 44,
+    yield: 0,
+    cashflow: 2100,
+    status: "Available",
+    beds: 7,
+    bathrooms: 3,
+    description: "Fully licensed 7-bedroom HMO in a converted Victorian terrace, two minutes' walk from Manchester Piccadilly. All rooms let to young professionals on rolling contracts. Landlord open to a compliant 5-year R2R agreement at below-market rent of £4,800/month. Gross room income of £7,700/month. Full management pack available on request.",
+    highlights: ["Fully licensed Article 4 HMO", "5-year R2R agreement available", "2 mins from Piccadilly station", "£7,700/mo gross room income"],
+    financials: { monthlyRent: 4800, managementFees: 770, netMonthly: 2100, annualReturn: 25200, setupCosts: 4800 },
+    location: "Piccadilly, Manchester, M1",
+    image: "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800&q=80",
   },
   {
-    id: 4, type: "BRRR", title: "Sheffield Terrace — Full Refurb BRRR",
-    area: "Sheffield", price: 72000, roi: 38, yield: 11.2, cashflow: 780,
-    status: "Under Offer", beds: 4, bathrooms: 2,
-    description: "Classic BRRR play. Purchase, refurb to spec, refinance to pull out capital, rent for cashflow. TPS Group manages the full build project. Projected GDV £135,000.",
-    highlights: ["Full project management included", "GDV £135,000", "Capital recycling strategy", "Planning pre-approved"],
-    financials: { monthlyRent: 1400, managementFees: 140, netMonthly: 780, annualReturn: 9360, setupCosts: 72000 },
-    location: "Hillsborough, Sheffield, S6",
-    image: "https://images.unsplash.com/photo-1582407947304-fd86f28f959f?w=800&q=80",
-  },
-  {
-    id: 5, type: "R2R", title: "Birmingham 8-Bed HMO — Premium Rooms",
-    area: "Birmingham", price: 110000, roi: 26, yield: 21, cashflow: 1680,
-    status: "Available", beds: 8, bathrooms: 4,
-    description: "High-spec R2R in sought-after Birmingham suburb. All rooms en-suite. Fully furnished to luxury standard. All bills included model with premium pricing.",
-    highlights: ["All en-suite rooms", "Luxury furnishing included", "All bills included model", "Premium room rates"],
-    financials: { monthlyRent: 5200, managementFees: 1040, netMonthly: 1680, annualReturn: 20160, setupCosts: 110000 },
+    id: 4,
+    type: "R2R",
+    title: "Birmingham 9-Bed HMO — Edgbaston",
+    area: "Birmingham",
+    price: 5200,
+    roi: 38,
+    yield: 0,
+    cashflow: 1980,
+    status: "Available",
+    beds: 9,
+    bathrooms: 4,
+    description: "Large detached Victorian property in prestigious Edgbaston, converted to a compliant 9-bedroom HMO. All en-suite rooms, recently refurbished to a high standard. Strong tenant demand from Birmingham University and QE Hospital professionals. Landlord seeking experienced HMO operator for 5-year management agreement at a below-market rent.",
+    highlights: ["All en-suite rooms", "Near Birmingham University & QEH", "Recently refurbished throughout", "5-year agreement available"],
+    financials: { monthlyRent: 5200, managementFees: 1040, netMonthly: 1980, annualReturn: 23760, setupCosts: 5200 },
     location: "Edgbaston, Birmingham, B15",
-    image: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=800&q=80",
+    image: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&q=80",
   },
   {
-    id: 6, type: "BMV", title: "Nottingham Victorian Terrace — 19% BMV",
-    area: "Nottingham", price: 135000, roi: 19, yield: 6.9, cashflow: 410,
-    status: "New", beds: 3, bathrooms: 1,
-    description: "Victorian terrace in thriving University district. Strong student rental demand. Minor cosmetic work needed. Probate sale — vendor wants quick clean completion.",
-    highlights: ["19% below market value", "Probate sale — quick completion", "Student rental demand", "University district"],
-    financials: { monthlyRent: 950, managementFees: 95, netMonthly: 410, annualReturn: 4920, setupCosts: 135000 },
-    location: "Lenton, Nottingham, NG7",
-    image: "https://images.unsplash.com/photo-1599427303058-f04cbcf4756f?w=800&q=80",
+    id: 5,
+    type: "BMV",
+    title: "Stockport Semi-Detached — 28% Below Market",
+    area: "Manchester",
+    price: 162000,
+    roi: 34,
+    yield: 7.2,
+    cashflow: 680,
+    status: "Available",
+    beds: 3,
+    bathrooms: 1,
+    description: "Three-bedroom Edwardian semi-detached requiring light cosmetic modernisation. Motivated vendor in probate — seeking a quick, clean sale. Comparable sold prices on the same road are £225,000. Full structural survey completed and available. Excellent value-add opportunity: new kitchen and bathroom would push value to £235,000. Strong local rental demand from families.",
+    highlights: ["28% below market value", "Probate sale — fast completion", "£63,000 instant equity", "Survey completed and available"],
+    financials: { monthlyRent: 1150, managementFees: 115, netMonthly: 680, annualReturn: 8160, setupCosts: 162000 },
+    location: "Edgeley, Stockport, SK3",
+    image: "https://images.unsplash.com/photo-1523217582562-09d0def993a6?w=800&q=80",
   },
   {
-    id: 7, type: "R2R", title: "London 14-Bed HMO — Premium Rooms",
-    area: "London", price: 15400, roi: 26, yield: 21, cashflow: 1680,
-    status: "Available", beds: 14, bathrooms: 14,
-    description: "High-spec R2R in sought-after Brixton. All rooms en-suite. Fully furnished to luxury standard.",
-    highlights: ["All en-suite rooms", "Luxury furnishing included", "Premium room rates", "Prime Brixton location"],
-    financials: { monthlyRent: 15400, managementFees: 1040, netMonthly: 1680, annualReturn: 20160, setupCosts: 110000 },
-    location: "Brixton, London, SW2",
-    image: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=800&q=80",
+    id: 6,
+    type: "BMV",
+    title: "Handsworth Victorian Terrace — 24% BMV",
+    area: "Birmingham",
+    price: 118000,
+    roi: 28,
+    yield: 8.1,
+    cashflow: 590,
+    status: "New",
+    beds: 3,
+    bathrooms: 1,
+    description: "A classic Birmingham back-to-back Victorian terrace in a rapidly regenerating pocket of Handsworth. Vendor in financial difficulty — wants a 28-day completion. Market value confirmed at £155,000 by two independent agents. Cosmetic work needed; bones are excellent. Ideal for a straightforward BTL or BRRR uplift. Strong tenant demand from local workers.",
+    highlights: ["24% below market value", "28-day completion possible", "£37,000 instant equity", "Regeneration area — value growth"],
+    financials: { monthlyRent: 975, managementFees: 97, netMonthly: 590, annualReturn: 7080, setupCosts: 118000 },
+    location: "Handsworth, Birmingham, B21",
+    image: "https://images.unsplash.com/photo-1588880331179-bc9b93a8cb5e?w=800&q=80",
+  },
+  {
+    id: 7,
+    type: "BMV",
+    title: "Lewisham Period Flat — 22% Below Market, SE13",
+    area: "London",
+    price: 298000,
+    roi: 22,
+    yield: 5.4,
+    cashflow: 780,
+    status: "Available",
+    beds: 2,
+    bathrooms: 1,
+    description: "First-floor conversion flat in a striking Edwardian bay-fronted terrace in Lewisham. Vendor emigrating — motivated for a swift sale at 22% below the confirmed market value of £382,000. Long lease (158 years remaining). Minor refurbishment needed. Lewisham is a Zone 2 regeneration hotspot with Crossrail 2 planned. Strong rental demand from commuters.",
+    highlights: ["22% below market value", "158-year lease", "Zone 2 — Crossrail 2 planned", "£84,000 instant equity"],
+    financials: { monthlyRent: 1700, managementFees: 170, netMonthly: 780, annualReturn: 9360, setupCosts: 298000 },
+    location: "Lewisham, London, SE13",
+    image: "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800&q=80",
+  },
+  {
+    id: 8,
+    type: "BRRR",
+    title: "Salford Terrace — BRRR with £68K GDV Uplift",
+    area: "Manchester",
+    price: 82000,
+    roi: 42,
+    yield: 9.8,
+    cashflow: 860,
+    status: "Available",
+    beds: 4,
+    bathrooms: 2,
+    description: "Classic BRRR opportunity in a rapidly improving pocket of Salford, minutes from MediaCityUK. Purchase at £82,000, full refurbishment budget of £38,000, projected GDV of £188,000. TPS Group provides full project management from acquisition to tenancy. Refinance anticipated to recycle 80–90% of capital deployed. Planning pre-assessed — no issues expected.",
+    highlights: ["Projected GDV £188,000", "Full project management included", "Capital recycling 80–90% expected", "MediaCity demand drives rents"],
+    financials: { monthlyRent: 1380, managementFees: 138, netMonthly: 860, annualReturn: 10320, setupCosts: 82000 },
+    location: "Salford, Greater Manchester, M5",
+    image: "https://images.unsplash.com/photo-1572120360610-d971b9d7767c?w=800&q=80",
+  },
+  {
+    id: 9,
+    type: "BRRR",
+    title: "Digbeth End-of-Terrace — Full Refurb BRRR",
+    area: "Birmingham",
+    price: 95000,
+    roi: 39,
+    yield: 10.2,
+    cashflow: 920,
+    status: "Under Offer",
+    beds: 4,
+    bathrooms: 2,
+    description: "End-of-terrace in Digbeth — Birmingham's most exciting regeneration quarter. Purchase at £95,000 with a £42,000 refurbishment to create a high-spec 4-bedroom HMO. Projected GDV of £215,000. Digbeth is benefiting from HS2, the new Curzon Street station, and £1bn+ of private investment. Projected rental income of £2,200/month post-refurb.",
+    highlights: ["GDV £215,000 projected", "HS2 & Curzon Street uplift", "Digbeth regeneration quarter", "£2,200/mo rental post-refurb"],
+    financials: { monthlyRent: 2200, managementFees: 220, netMonthly: 920, annualReturn: 11040, setupCosts: 95000 },
+    location: "Digbeth, Birmingham, B5",
+    image: "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800&q=80",
+  },
+  {
+    id: 10,
+    type: "BTL",
+    title: "Canary Wharf New-Build — High-Yield City Flat",
+    area: "London",
+    price: 485000,
+    roi: 16,
+    yield: 5.8,
+    cashflow: 1240,
+    status: "New",
+    beds: 2,
+    bathrooms: 2,
+    description: "Brand new 2-bedroom apartment in a landmark tower a five-minute walk from Canary Wharf DLR and Elizabeth Line. 10-year NHBC warranty. Fully managed lettings service included. Strong corporate tenant demand from Canary Wharf's financial district. Rental projection of £2,800/month. Developer part-exchange available — ideal for investors looking to recycle equity.",
+    highlights: ["10-year NHBC warranty", "5 mins to Elizabeth Line", "Corporate tenant demand", "Lettings management included"],
+    financials: { monthlyRent: 2800, managementFees: 280, netMonthly: 1240, annualReturn: 14880, setupCosts: 485000 },
+    location: "Canary Wharf, London, E14",
+    image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80",
   },
 ];
 
 const IconR2R = ({ color }) => (
-  <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
     <path d="M4 24V12L14 4L24 12V24" stroke={color} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
     <path d="M10 24V17H18V24" stroke={color} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
     <circle cx="20" cy="20" r="5" fill="white" stroke={color} strokeWidth="1.4"/>
@@ -101,7 +211,7 @@ const IconR2R = ({ color }) => (
   </svg>
 );
 const IconBMV = ({ color }) => (
-  <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
     <path d="M4 8L10 14L15 9L24 20" stroke={color} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
     <path d="M19 20H24V15" stroke={color} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
     <path d="M14 5H8C6.9 5 6 5.9 6 7V10" stroke={color} strokeWidth="1.4" strokeLinecap="round"/>
@@ -110,22 +220,20 @@ const IconBMV = ({ color }) => (
   </svg>
 );
 const IconBTL = ({ color }) => (
-  <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
     <rect x="5" y="10" width="18" height="14" rx="1.5" stroke={color} strokeWidth="1.6"/>
     <path d="M9 10V7C9 5.3 10.3 4 12 4H16C17.7 4 19 5.3 19 7V10" stroke={color} strokeWidth="1.6" strokeLinecap="round"/>
     <circle cx="14" cy="17" r="2.5" stroke={color} strokeWidth="1.4"/>
-    <path d="M14 14.5V19.5" stroke={color} strokeWidth="1.4" strokeLinecap="round"/>
-    <path d="M11.5 17H16.5" stroke={color} strokeWidth="1.4" strokeLinecap="round"/>
+    <path d="M14 14.5V19.5M11.5 17H16.5" stroke={color} strokeWidth="1.4" strokeLinecap="round"/>
   </svg>
 );
 const IconBRRR = ({ color }) => (
-  <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
     <path d="M14 5C9 5 5 9 5 14" stroke={color} strokeWidth="1.6" strokeLinecap="round"/>
     <path d="M14 23C19 23 23 19 23 14" stroke={color} strokeWidth="1.6" strokeLinecap="round"/>
     <path d="M5 14C5 19 9 23 14 23" stroke={color} strokeWidth="1.4" strokeLinecap="round" strokeDasharray="2 2"/>
     <path d="M14 5C19 5 23 9 23 14" stroke={color} strokeWidth="1.4" strokeLinecap="round" strokeDasharray="2 2"/>
-    <path d="M2 14L5 11L8 14" stroke={color} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
-    <path d="M26 14L23 17L20 14" stroke={color} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M2 14L5 11L8 14M26 14L23 17L20 14" stroke={color} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
     <circle cx="14" cy="14" r="3" stroke={color} strokeWidth="1.4"/>
   </svg>
 );
@@ -141,9 +249,8 @@ const typeColors = { R2R: { bg: "#e8f0f8", text: "#1a3c5e" }, BMV: { bg: "#e8f5e
 const statusColors = { Available: { bg: "#e8f5ee", text: "#1e5c3a" }, "Under Offer": { bg: "#fef3cd", text: "#7d5a00" }, New: { bg: "#e8f0f8", text: "#1a3c5e" } };
 
 function TPSLogo({ size = 38 }) {
-  const s = size;
   return (
-    <svg width={s} height={s} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width={size} height={size} viewBox="0 0 100 100" fill="none">
       <circle cx="36" cy="28" r="18" fill="#4BAEE8" />
       <circle cx="62" cy="24" r="15" fill="#F5B800" />
       <ellipse cx="36" cy="62" rx="18" ry="16" fill="#2EC98E" />
@@ -226,7 +333,7 @@ function Hero({ setPage }) {
         </div>
         <div className="hero-image-col" style={{ position: "relative", display: "flex", alignItems: "stretch" }}>
           <div style={{ position: "absolute", inset: 0, overflow: "hidden" }}>
-            <img src="https://images.unsplash.com/photo-1560185007-cde436f6a4d0?w=1000&q=85" alt="Premium property" style={{ width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.92)" }} />
+            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1000&q=85" alt="Premium UK property" style={{ width: "100%", height: "100%", objectFit: "cover", filter: "brightness(0.92)" }} />
             <div style={{ position: "absolute", top: 0, left: 0, bottom: 0, width: 40, background: "linear-gradient(to right, white, transparent)" }} />
           </div>
           <div style={{ position: "absolute", bottom: 48, left: -24, background: "white", border: "1px solid #ebebeb", borderRadius: 12, padding: "24px 28px", boxShadow: "0 8px 40px rgba(0,0,0,0.08)", zIndex: 2 }}>
@@ -291,6 +398,7 @@ function CategoryGrid({ setPage }) {
 function DealCard({ deal, onClick }) {
   const tc = typeColors[deal.type] || { bg: "#f0f0f0", text: "#333" };
   const sc = statusColors[deal.status] || { bg: "#f0f0f0", text: "#333" };
+  const isRent = deal.type === "R2R";
   return (
     <div onClick={onClick} style={{ background: "white", borderRadius: 16, overflow: "hidden", border: "1px solid #e8e8e8", cursor: "pointer", transition: "all 0.25s" }}
       onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.boxShadow = "0 12px 40px rgba(0,0,0,0.1)"; }}
@@ -304,16 +412,16 @@ function DealCard({ deal, onClick }) {
         <p style={{ fontSize: 12, color: "#999", marginBottom: 6 }}>{deal.location}</p>
         <h3 style={{ fontFamily: "'Georgia', serif", fontSize: 17, fontWeight: 700, color: "#1a1a1a", margin: "0 0 16px", lineHeight: 1.3 }}>{deal.title}</h3>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, marginBottom: 18 }}>
-          {[["ROI", `${deal.roi}%`], ["Yield", `${deal.yield}%`], ["Cashflow", `£${deal.cashflow}/mo`]].map(([l, v]) => (
+          {[["ROI", `${deal.roi}%`], [isRent ? "Monthly" : "Yield", isRent ? `£${deal.cashflow.toLocaleString()}` : `${deal.yield}%`], ["Cashflow", `£${deal.cashflow.toLocaleString()}/mo`]].map(([l, v]) => (
             <div key={l} style={{ background: "#f7f8fc", borderRadius: 8, padding: "10px 8px", textAlign: "center" }}>
               <div style={{ fontSize: 11, color: "#888", marginBottom: 3 }}>{l}</div>
-              <div style={{ fontSize: 14, fontWeight: 700, color: "#1a3c5e" }}>{v}</div>
+              <div style={{ fontSize: 13, fontWeight: 700, color: "#1a3c5e" }}>{v}</div>
             </div>
           ))}
         </div>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", borderTop: "1px solid #f0f0f0", paddingTop: 14 }}>
           <div>
-            <span style={{ fontSize: 12, color: "#999" }}>From </span>
+            <span style={{ fontSize: 12, color: "#999" }}>{isRent ? "Monthly rent " : "From "}</span>
             <span style={{ fontFamily: "'Georgia', serif", fontSize: 20, fontWeight: 700, color: "#1a1a1a" }}>£{deal.price.toLocaleString()}</span>
           </div>
           <button style={{ background: "#1a3c5e", color: "white", border: "none", borderRadius: 8, padding: "8px 16px", cursor: "pointer", fontSize: 13, fontWeight: 600 }}>View Deal</button>
@@ -328,15 +436,15 @@ function FilterBar({ filters, setFilters }) {
     <div style={{ background: "white", borderRadius: 14, padding: "20px 24px", border: "1px solid #e8e8e8", marginBottom: 32, display: "flex", gap: 16, flexWrap: "wrap", alignItems: "center" }} className="filter-bar">
       <input value={filters.search} onChange={e => setFilters(f => ({ ...f, search: e.target.value }))} placeholder="Search deals..." style={{ flex: "1 1 200px", border: "1px solid #e0e0e0", borderRadius: 8, padding: "10px 14px", fontSize: 14, outline: "none", minWidth: 160 }} />
       <select value={filters.area} onChange={e => setFilters(f => ({ ...f, area: e.target.value }))} style={{ border: "1px solid #e0e0e0", borderRadius: 8, padding: "10px 14px", fontSize: 14, background: "white", color: "#333", minWidth: 140 }}>
-        <option value="">All Areas</option>
-        {["Manchester","Leeds","Liverpool","Sheffield","Birmingham","Nottingham","London"].map(a => <option key={a}>{a}</option>)}
+        <option value="">All Cities</option>
+        {["London","Manchester","Birmingham"].map(a => <option key={a}>{a}</option>)}
       </select>
       <select value={filters.minRoi} onChange={e => setFilters(f => ({ ...f, minRoi: e.target.value }))} style={{ border: "1px solid #e0e0e0", borderRadius: 8, padding: "10px 14px", fontSize: 14, background: "white", color: "#333", minWidth: 130 }}>
         <option value="">Min ROI</option>
-        <option value="10">10%+</option>
         <option value="15">15%+</option>
-        <option value="20">20%+</option>
-        <option value="30">30%+</option>
+        <option value="25">25%+</option>
+        <option value="35">35%+</option>
+        <option value="50">50%+</option>
       </select>
       <select value={filters.status} onChange={e => setFilters(f => ({ ...f, status: e.target.value }))} style={{ border: "1px solid #e0e0e0", borderRadius: 8, padding: "10px 14px", fontSize: 14, background: "white", color: "#333", minWidth: 140 }}>
         <option value="">All Statuses</option>
@@ -355,7 +463,7 @@ function DealsPage({ typeFilter, setActiveDeal }) {
   const [filters, setFilters] = useState({ search: "", area: "", minRoi: "", status: "" });
   const filtered = DEALS.filter(d => {
     if (typeFilter && d.type !== typeFilter.toUpperCase()) return false;
-    if (filters.search && !d.title.toLowerCase().includes(filters.search.toLowerCase()) && !d.area.toLowerCase().includes(filters.search.toLowerCase())) return false;
+    if (filters.search && !d.title.toLowerCase().includes(filters.search.toLowerCase()) && !d.area.toLowerCase().includes(filters.search.toLowerCase()) && !d.location.toLowerCase().includes(filters.search.toLowerCase())) return false;
     if (filters.area && d.area !== filters.area) return false;
     if (filters.minRoi && d.roi < parseInt(filters.minRoi)) return false;
     if (filters.status && d.status !== filters.status) return false;
@@ -367,7 +475,7 @@ function DealsPage({ typeFilter, setActiveDeal }) {
       <div style={{ marginBottom: 40 }}>
         {cat && <div style={{ display: "inline-block", background: cat.light, color: cat.color, fontSize: 12, fontWeight: 700, letterSpacing: "1px", textTransform: "uppercase", borderRadius: 6, padding: "5px 12px", marginBottom: 14 }}>{cat.type}</div>}
         <h1 style={{ fontFamily: "'Georgia', serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 700, color: "#1a1a1a", margin: "0 0 12px", letterSpacing: "-0.8px" }}>{cat ? cat.label + " Deals" : "All Available Deals"}</h1>
-        <p style={{ fontSize: 16, color: "#666", margin: 0 }}>{cat ? cat.description : "Browse our full portfolio of sourced, vetted investment opportunities."}</p>
+        <p style={{ fontSize: 16, color: "#666", margin: 0 }}>{cat ? cat.description : "Browse our full portfolio of sourced, vetted investment opportunities across London, Manchester and Birmingham."}</p>
       </div>
       <FilterBar filters={filters} setFilters={setFilters} />
       {filtered.length === 0 ? (
@@ -394,28 +502,19 @@ function InquiryForm({ deal }) {
 
   const handleSubmit = async () => {
     if (!form.name || !form.email) { setError("Please fill in your name and email."); return; }
-    setLoading(true);
-    setError("");
+    setLoading(true); setError("");
     try {
       await sendToAirtable({
-        "Full Name": form.name,
-        "Email": form.email,
-        "Phone": form.phone || undefined,
-        "WhatsApp": form.whatsapp || undefined,
-        "Contact Preference": form.contactPref || undefined,
-        "Investor Type": form.investorType || undefined,
-        "Budget Range": form.budget || undefined,
-        "Experience Level": form.experience || undefined,
-        "Target Area": form.area || undefined,
-        "Message": form.message || undefined,
+        "Full Name": form.name, "Email": form.email,
+        "Phone": form.phone || undefined, "WhatsApp": form.whatsapp || undefined,
+        "Contact Preference": form.contactPref || undefined, "Investor Type": form.investorType || undefined,
+        "Budget Range": form.budget || undefined, "Experience Level": form.experience || undefined,
+        "Target Area": form.area || undefined, "Message": form.message || undefined,
         "Deal Interested In": deal ? deal.title : undefined,
-        "Status": "New",
-        "Source": "Website Enquiry",
+        "Status": "New", "Source": "Website Enquiry",
       });
       setSent(true);
-    } catch (e) {
-      setError("Something went wrong. Please try again.");
-    }
+    } catch { setError("Something went wrong. Please try again."); }
     setLoading(false);
   };
 
@@ -441,30 +540,26 @@ function InquiryForm({ deal }) {
       <div className="form-grid-2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginBottom: 14 }}>
         <div><label style={labelStyle}>Contact Preference</label>
           <select value={form.contactPref} onChange={set("contactPref")} style={{ ...inputStyle }}>
-            <option value="">Select...</option>
-            <option>Phone Call</option><option>WhatsApp</option><option>Email</option>
+            <option value="">Select...</option><option>Phone Call</option><option>WhatsApp</option><option>Email</option>
           </select>
         </div>
         <div><label style={labelStyle}>Investor Type</label>
           <select value={form.investorType} onChange={set("investorType")} style={{ ...inputStyle }}>
-            <option value="">Select...</option>
-            <option>First-time Investor</option><option>Experienced Investor</option><option>Portfolio Investor</option><option>HNW / UHNW</option>
+            <option value="">Select...</option><option>First-time Investor</option><option>Experienced Investor</option><option>Portfolio Investor</option><option>HNW / UHNW</option>
           </select>
         </div>
         <div><label style={labelStyle}>Budget Range</label>
           <select value={form.budget} onChange={set("budget")} style={{ ...inputStyle }}>
-            <option value="">Select...</option>
-            <option>Under £50k</option><option>£50k – £100k</option><option>£100k – £200k</option><option>£200k – £500k</option><option>£500k+</option>
+            <option value="">Select...</option><option>Under £50k</option><option>£50k – £100k</option><option>£100k – £200k</option><option>£200k – £500k</option><option>£500k+</option>
           </select>
         </div>
         <div><label style={labelStyle}>Experience Level</label>
           <select value={form.experience} onChange={set("experience")} style={{ ...inputStyle }}>
-            <option value="">Select...</option>
-            <option>No experience</option><option>1-2 years</option><option>3-5 years</option><option>5+ years</option>
+            <option value="">Select...</option><option>No experience</option><option>1-2 years</option><option>3-5 years</option><option>5+ years</option>
           </select>
         </div>
       </div>
-      <div style={{ marginBottom: 14 }}><label style={labelStyle}>Target Area</label><input value={form.area} onChange={set("area")} placeholder="e.g. Manchester, Leeds, Sheffield" style={inputStyle} /></div>
+      <div style={{ marginBottom: 14 }}><label style={labelStyle}>Target Area</label><input value={form.area} onChange={set("area")} placeholder="e.g. London, Manchester, Birmingham" style={inputStyle} /></div>
       <div style={{ marginBottom: 20 }}><label style={labelStyle}>Message</label><textarea value={form.message} onChange={set("message")} placeholder={`Questions about ${deal ? deal.title : "this deal"}...`} rows={3} style={{ ...inputStyle, resize: "vertical" }} /></div>
       {error && <p style={{ color: "#c0392b", fontSize: 13, marginBottom: 12 }}>{error}</p>}
       <button onClick={handleSubmit} disabled={loading} style={{ width: "100%", background: loading ? "#7f9db5" : "#1a3c5e", color: "white", border: "none", borderRadius: 10, padding: "14px", cursor: loading ? "not-allowed" : "pointer", fontSize: 15, fontWeight: 700 }}>
@@ -477,6 +572,7 @@ function InquiryForm({ deal }) {
 
 function DealDetailPage({ deal, setPage }) {
   const tc = typeColors[deal.type] || { bg: "#f0f0f0", text: "#333" };
+  const isRent = deal.type === "R2R";
   return (
     <div style={{ background: "#f7f8fc", minHeight: "100vh", paddingTop: 72 }}>
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "40px 5%" }}>
@@ -494,10 +590,14 @@ function DealDetailPage({ deal, setPage }) {
               </div>
               <h1 style={{ fontFamily: "'Georgia', serif", fontSize: 30, fontWeight: 700, color: "#1a1a1a", margin: "0 0 16px", letterSpacing: "-0.5px" }}>{deal.title}</h1>
               <div className="deal-metrics" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12, marginBottom: 24 }}>
-                {[["ROI", `${deal.roi}%`, "#1e5c3a", "#e8f5ee"], ["Annual Yield", `${deal.yield}%`, "#4a2c6e", "#f0eaf8"], ["Monthly Cashflow", `£${deal.cashflow}`, "#1a3c5e", "#e8f0f8"]].map(([l, v, c, bg]) => (
+                {[
+                  ["ROI", `${deal.roi}%`, "#1e5c3a", "#e8f5ee"],
+                  [isRent ? "Net Monthly" : "Annual Yield", isRent ? `£${deal.cashflow.toLocaleString()}` : `${deal.yield}%`, "#4a2c6e", "#f0eaf8"],
+                  ["Monthly Cashflow", `£${deal.cashflow.toLocaleString()}`, "#1a3c5e", "#e8f0f8"]
+                ].map(([l, v, c, bg]) => (
                   <div key={l} style={{ background: bg, borderRadius: 12, padding: "16px 14px", textAlign: "center" }}>
                     <div style={{ fontSize: 12, color: c, fontWeight: 600, marginBottom: 4, opacity: 0.7 }}>{l}</div>
-                    <div style={{ fontFamily: "'Georgia', serif", fontSize: 26, fontWeight: 700, color: c }}>{v}</div>
+                    <div style={{ fontFamily: "'Georgia', serif", fontSize: 24, fontWeight: 700, color: c }}>{v}</div>
                   </div>
                 ))}
               </div>
@@ -507,7 +607,13 @@ function DealDetailPage({ deal, setPage }) {
             <div className="deal-bottom-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24 }}>
               <div style={{ background: "white", borderRadius: 16, padding: "24px", border: "1px solid #e8e8e8" }}>
                 <h2 style={{ fontFamily: "'Georgia', serif", fontSize: 18, fontWeight: 700, color: "#1a1a1a", margin: "0 0 16px" }}>Financial Breakdown</h2>
-                {[["Monthly Gross Rent", `£${deal.financials.monthlyRent.toLocaleString()}`], ["Management Fees", `£${deal.financials.managementFees.toLocaleString()}`], ["Net Monthly Income", `£${deal.financials.netMonthly.toLocaleString()}`], ["Annual Return", `£${deal.financials.annualReturn.toLocaleString()}`], ["Setup / Purchase Cost", `£${deal.financials.setupCosts.toLocaleString()}`]].map(([l, v], i) => (
+                {[
+                  [isRent ? "Monthly Rent Agreed" : "Monthly Gross Rent", `£${deal.financials.monthlyRent.toLocaleString()}`],
+                  ["Management / Costs", `£${deal.financials.managementFees.toLocaleString()}`],
+                  ["Net Monthly Income", `£${deal.financials.netMonthly.toLocaleString()}`],
+                  ["Annual Return", `£${deal.financials.annualReturn.toLocaleString()}`],
+                  [isRent ? "Setup / Deposit Cost" : "Purchase Price", `£${deal.financials.setupCosts.toLocaleString()}`]
+                ].map(([l, v], i) => (
                   <div key={l} style={{ display: "flex", justifyContent: "space-between", padding: "10px 0", borderBottom: i < 4 ? "1px solid #f0f0f0" : "none" }}>
                     <span style={{ fontSize: 14, color: "#666" }}>{l}</span>
                     <span style={{ fontSize: 14, fontWeight: 700, color: "#1a1a1a" }}>{v}</span>
@@ -552,23 +658,16 @@ function AlertsPage() {
 
   const handleSubmit = async () => {
     if (!form.name || !form.email) { setError("Please fill in your name and email."); return; }
-    setLoading(true);
-    setError("");
+    setLoading(true); setError("");
     try {
       await sendToAirtable({
-        "Full Name": form.name,
-        "Email": form.email,
-        "Phone": form.phone || undefined,
-        "Budget Range": form.budget || undefined,
-        "Target Area": form.areas || undefined,
+        "Full Name": form.name, "Email": form.email, "Phone": form.phone || undefined,
+        "Budget Range": form.budget || undefined, "Target Area": form.areas || undefined,
         "Message": form.types.length > 0 ? `Deal types: ${form.types.join(", ")} | Frequency: ${form.frequency}` : `Frequency: ${form.frequency}`,
-        "Status": "New",
-        "Source": "Deal Alert",
+        "Status": "New", "Source": "Deal Alert",
       });
       setSent(true);
-    } catch (e) {
-      setError("Something went wrong. Please try again.");
-    }
+    } catch { setError("Something went wrong. Please try again."); }
     setLoading(false);
   };
 
@@ -617,7 +716,7 @@ function AlertsPage() {
           </div>
           <div style={{ marginBottom: 16 }}>
             <label style={labelStyle}>Target Areas</label>
-            <input value={form.areas} onChange={e => setForm(f => ({ ...f, areas: e.target.value }))} placeholder="e.g. Manchester, Leeds, Birmingham" style={inputStyle} />
+            <input value={form.areas} onChange={e => setForm(f => ({ ...f, areas: e.target.value }))} placeholder="e.g. London, Manchester, Birmingham" style={inputStyle} />
           </div>
           <div style={{ marginBottom: 28 }}>
             <label style={labelStyle}>Alert Frequency</label>
@@ -723,7 +822,7 @@ function Footer({ setPage }) {
                 <div style={{ fontSize: 11, color: "rgba(255,255,255,0.55)" }}>The Property Source Group</div>
               </div>
             </div>
-            <p style={{ fontSize: 14, color: "rgba(255,255,255,0.5)", lineHeight: 1.7, maxWidth: 280 }}>Premium property deal flow for serious UK investors. R2R, BMV, BTL and BRRR opportunities sourced daily.</p>
+            <p style={{ fontSize: 14, color: "rgba(255,255,255,0.5)", lineHeight: 1.7, maxWidth: 280 }}>Premium off-market property deal flow for serious UK investors. London, Manchester and Birmingham specialists.</p>
           </div>
           {[["Strategies", ["R2R Deals","BMV Deals","BTL Deals","BRRR Deals"]], ["Company", ["About TPS","How It Works","Contact","Join Alerts"]]].map(([h, links]) => (
             <div key={h}>
@@ -758,7 +857,7 @@ function FeaturedDeals({ setActiveDeal }) {
           </div>
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(310px, 1fr))", gap: 24 }}>
-          {DEALS.slice(0, 3).map(deal => <DealCard key={deal.id} deal={deal} onClick={() => setActiveDeal(deal)} />)}
+          {DEALS.filter(d => d.status === "Available" || d.status === "New").slice(0, 3).map(deal => <DealCard key={deal.id} deal={deal} onClick={() => setActiveDeal(deal)} />)}
         </div>
       </div>
     </section>
@@ -768,7 +867,6 @@ function FeaturedDeals({ setActiveDeal }) {
 export default function App() {
   const [page, setPage] = useState("home");
   const [activeDeal, setActiveDeal] = useState(null);
-
   const handleSetActiveDeal = deal => { setActiveDeal(deal); setPage("deal-detail"); window.scrollTo(0, 0); };
   const handleSetPage = p => { setActiveDeal(null); setPage(p); window.scrollTo(0, 0); };
   const typeFilter = ["r2r","bmv","btl","brrr","deals"].includes(page) ? (page === "deals" ? null : page.toUpperCase()) : null;
@@ -776,43 +874,30 @@ export default function App() {
   return (
     <div style={{ fontFamily: "'Palatino Linotype', 'Book Antiqua', Georgia, serif", minHeight: "100vh", background: "white" }}>
       <style>{`
-        * { box-sizing: border-box; }
-        body { margin: 0; }
+        * { box-sizing: border-box; } body { margin: 0; }
         input, select, textarea, button { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
         img { display: block; }
         .desktop-nav { display: flex !important; }
         .mobile-menu-btn { display: none !important; }
         @media (max-width: 768px) {
-          .desktop-nav { display: none !important; }
-          .mobile-menu-btn { display: flex !important; }
-          .hero-grid { grid-template-columns: 1fr !important; }
-          .hero-image-col { display: none !important; }
+          .desktop-nav { display: none !important; } .mobile-menu-btn { display: flex !important; }
+          .hero-grid { grid-template-columns: 1fr !important; } .hero-image-col { display: none !important; }
           .hero-left { padding: 40px 0 48px !important; border-right: none !important; }
           .category-grid { grid-template-columns: 1fr 1fr !important; gap: 12px !important; }
           .deals-grid { grid-template-columns: 1fr !important; }
-          .deal-detail-grid { grid-template-columns: 1fr !important; }
-          .deal-sticky { position: static !important; }
-          .deal-metrics { grid-template-columns: 1fr 1fr 1fr !important; }
-          .deal-bottom-grid { grid-template-columns: 1fr !important; }
+          .deal-detail-grid { grid-template-columns: 1fr !important; } .deal-sticky { position: static !important; }
+          .deal-metrics { grid-template-columns: 1fr 1fr 1fr !important; } .deal-bottom-grid { grid-template-columns: 1fr !important; }
           .form-grid-2 { grid-template-columns: 1fr !important; }
-          .whytps-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
-          .whytps-stats { grid-template-columns: 1fr 1fr !important; }
+          .whytps-grid { grid-template-columns: 1fr !important; gap: 40px !important; } .whytps-stats { grid-template-columns: 1fr 1fr !important; }
           .hiw-grid { grid-template-columns: 1fr !important; gap: 0 !important; }
-          .hiw-step:first-child { border-radius: 14px 14px 0 0 !important; }
-          .hiw-step:last-child { border-radius: 0 0 14px 14px !important; }
-          .hiw-step { border-radius: 0 !important; }
-          .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 32px !important; }
-          .footer-brand { grid-column: 1 / -1 !important; }
+          .hiw-step:first-child { border-radius: 14px 14px 0 0 !important; } .hiw-step:last-child { border-radius: 0 0 14px 14px !important; } .hiw-step { border-radius: 0 !important; }
+          .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 32px !important; } .footer-brand { grid-column: 1 / -1 !important; }
           .alerts-form-grid { grid-template-columns: 1fr !important; }
-          .filter-bar { flex-direction: column !important; }
-          .filter-bar > * { width: 100% !important; }
-          .subscribe-row { flex-direction: column !important; }
-          .subscribe-row input { width: 100% !important; }
-          .subscribe-row button { width: 100% !important; }
+          .filter-bar { flex-direction: column !important; } .filter-bar > * { width: 100% !important; }
+          .subscribe-row { flex-direction: column !important; } .subscribe-row input, .subscribe-row button { width: 100% !important; }
         }
         @media (max-width: 480px) {
-          .category-grid { grid-template-columns: 1fr !important; }
-          .deal-metrics { grid-template-columns: 1fr 1fr !important; }
+          .category-grid { grid-template-columns: 1fr !important; } .deal-metrics { grid-template-columns: 1fr 1fr !important; }
         }
       `}</style>
       <NavBar page={page} setPage={handleSetPage} />
