@@ -88,8 +88,8 @@ const DEALS = [
     netMonthly: 2000,
     annualReturn: 24000,
     setupCosts: 3500
-  }
-    image:"https://ibb.co/mF1tmkwk"
+  },
+    image: "https://ibb.co/mF1tmkwk",
 }
 ];
 
