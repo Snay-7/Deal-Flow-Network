@@ -61,16 +61,6 @@ const DEALS = [
     location: "Lenton, Nottingham, NG7",
     image: "https://images.unsplash.com/photo-1599427303058-f04cbcf4756f?w=800&q=80",
   },
-  {
-    id: 7, type: "R2R", title: "London 14-Bed HMO — Premium Rooms",
-    area: "London", price: 15400, roi: 26, yield: 21, cashflow: 1680,
-    status: "Available", beds: 14, bathrooms: 14,
-    description: "High-spec R2R in sought-after Brixton. All rooms en-suite. Fully furnished to luxury standard.",
-    highlights: ["All en-suite rooms", "Luxury furnishing included", "Premium room rates", "Prime Brixton location"],
-    financials: { monthlyRent: 15400, managementFees: 1040, netMonthly: 1680, annualReturn: 20160, setupCosts: 110000 },
-    location: "Brixton, London, SW2",
-    image: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=800&q=80",
-  },
 ];
 
 const IconR2R = ({ color }) => (
