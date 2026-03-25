@@ -1,4 +1,23 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+
+const AIRTABLE_TOKEN = "patv6uO1OHgrMZhK8.8f790e5ad357eaa113431aefd738718e283ff8dc6fa0cac3afc557e372073eaa";
+const AIRTABLE_BASE_ID = "appO3qjHFUHUA2iw9";
+
+async function sendToAirtable(fields) {
+  const res = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Website%20Leads`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${AIRTABLE_TOKEN}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ fields }),
+  });
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(JSON.stringify(err));
+  }
+  return res.json();
+}
 
 const DEALS = [
   {
@@ -61,6 +80,16 @@ const DEALS = [
     location: "Lenton, Nottingham, NG7",
     image: "https://images.unsplash.com/photo-1599427303058-f04cbcf4756f?w=800&q=80",
   },
+  {
+    id: 7, type: "R2R", title: "London 14-Bed HMO — Premium Rooms",
+    area: "London", price: 15400, roi: 26, yield: 21, cashflow: 1680,
+    status: "Available", beds: 14, bathrooms: 14,
+    description: "High-spec R2R in sought-after Brixton. All rooms en-suite. Fully furnished to luxury standard.",
+    highlights: ["All en-suite rooms", "Luxury furnishing included", "Premium room rates", "Prime Brixton location"],
+    financials: { monthlyRent: 15400, managementFees: 1040, netMonthly: 1680, annualReturn: 20160, setupCosts: 110000 },
+    location: "Brixton, London, SW2",
+    image: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?w=800&q=80",
+  },
 ];
 
 const IconR2R = ({ color }) => (
@@ -71,7 +100,6 @@ const IconR2R = ({ color }) => (
     <path d="M17.5 20H22.5M20 17.5V22.5" stroke={color} strokeWidth="1.4" strokeLinecap="round"/>
   </svg>
 );
-
 const IconBMV = ({ color }) => (
   <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M4 8L10 14L15 9L24 20" stroke={color} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
@@ -81,7 +109,6 @@ const IconBMV = ({ color }) => (
     <path d="M14 3.5V6.5M12.5 5H15.5" stroke={color} strokeWidth="1.2" strokeLinecap="round"/>
   </svg>
 );
-
 const IconBTL = ({ color }) => (
   <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
     <rect x="5" y="10" width="18" height="14" rx="1.5" stroke={color} strokeWidth="1.6"/>
@@ -91,7 +118,6 @@ const IconBTL = ({ color }) => (
     <path d="M11.5 17H16.5" stroke={color} strokeWidth="1.4" strokeLinecap="round"/>
   </svg>
 );
-
 const IconBRRR = ({ color }) => (
   <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M14 5C9 5 5 9 5 14" stroke={color} strokeWidth="1.6" strokeLinecap="round"/>
@@ -105,18 +131,16 @@ const IconBRRR = ({ color }) => (
 );
 
 const CATEGORY_ICONS = { R2R: IconR2R, BMV: IconBMV, BTL: IconBTL, BRRR: IconBRRR };
-
 const CATEGORIES = [
   { type: "R2R", label: "Rent to Rent", description: "Control properties without buying. Cashflow from day one.", color: "#1a3c5e", light: "#e8f0f8" },
   { type: "BMV", label: "Below Market Value", description: "Acquire instant equity at discounted prices.", color: "#1e5c3a", light: "#e8f5ee" },
   { type: "BTL", label: "Buy to Let", description: "Long-term rental income with capital appreciation.", color: "#4a2c6e", light: "#f0eaf8" },
   { type: "BRRR", label: "BRRR Strategy", description: "Buy, Refurb, Refinance, Rent — recycle capital.", color: "#6e2c1a", light: "#f8ece8" },
 ];
-
 const typeColors = { R2R: { bg: "#e8f0f8", text: "#1a3c5e" }, BMV: { bg: "#e8f5ee", text: "#1e5c3a" }, BTL: { bg: "#f0eaf8", text: "#4a2c6e" }, BRRR: { bg: "#f8ece8", text: "#6e2c1a" } };
 const statusColors = { Available: { bg: "#e8f5ee", text: "#1e5c3a" }, "Under Offer": { bg: "#fef3cd", text: "#7d5a00" }, New: { bg: "#e8f0f8", text: "#1a3c5e" } };
 
-function TPSLogo({ size = 38, dark = false }) {
+function TPSLogo({ size = 38 }) {
   const s = size;
   return (
     <svg width={s} height={s} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -152,22 +176,19 @@ function NavBar({ page, setPage }) {
           </button>
         </div>
         <button className="mobile-menu-btn" onClick={() => setMenuOpen(!menuOpen)} style={{ display: "none", background: "none", border: "none", cursor: "pointer", padding: 8 }}>
-          {menuOpen ? (
-            <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M4 4L18 18M18 4L4 18" stroke="#1a3c5e" strokeWidth="1.8" strokeLinecap="round"/></svg>
-          ) : (
-            <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 6H19M3 11H19M3 16H19" stroke="#1a3c5e" strokeWidth="1.8" strokeLinecap="round"/></svg>
-          )}
+          {menuOpen
+            ? <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M4 4L18 18M18 4L4 18" stroke="#1a3c5e" strokeWidth="1.8" strokeLinecap="round"/></svg>
+            : <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 6H19M3 11H19M3 16H19" stroke="#1a3c5e" strokeWidth="1.8" strokeLinecap="round"/></svg>
+          }
         </button>
       </div>
       {menuOpen && (
         <div style={{ borderTop: "1px solid #ebebeb", background: "white", padding: "12px 0 20px" }}>
           {[["home","All Deals"], ["r2r","Rent to Rent (R2R)"], ["bmv","Below Market Value (BMV)"], ["btl","Buy to Let (BTL)"], ["brrr","BRRR Strategy"]].map(([p, label]) => (
-            <button key={p} onClick={() => { setPage(p); setMenuOpen(false); }} style={{ display: "block", width: "100%", background: page === p ? "#f0f4f8" : "none", border: "none", cursor: "pointer", fontSize: 15, fontWeight: page === p ? 600 : 400, color: page === p ? "#1a3c5e" : "#444", padding: "12px 5%", textAlign: "left", letterSpacing: "0.1px" }}>{label}</button>
+            <button key={p} onClick={() => { setPage(p); setMenuOpen(false); }} style={{ display: "block", width: "100%", background: page === p ? "#f0f4f8" : "none", border: "none", cursor: "pointer", fontSize: 15, fontWeight: page === p ? 600 : 400, color: page === p ? "#1a3c5e" : "#444", padding: "12px 5%", textAlign: "left" }}>{label}</button>
           ))}
           <div style={{ padding: "12px 5% 0" }}>
-            <button onClick={() => { setPage("alerts"); setMenuOpen(false); }} style={{ width: "100%", background: "#1a3c5e", color: "white", border: "none", borderRadius: 8, padding: "13px", cursor: "pointer", fontSize: 14, fontWeight: 600 }}>
-              Join Deal Alerts
-            </button>
+            <button onClick={() => { setPage("alerts"); setMenuOpen(false); }} style={{ width: "100%", background: "#1a3c5e", color: "white", border: "none", borderRadius: 8, padding: "13px", cursor: "pointer", fontSize: 14, fontWeight: 600 }}>Join Deal Alerts</button>
           </div>
         </div>
       )}
@@ -195,24 +216,12 @@ function Hero({ setPage }) {
             <p style={{ fontSize: 15, color: "#333", margin: "0 0 16px", lineHeight: 1.5, fontWeight: 400 }}>Subscribe to receive bespoke deals direct to your inbox — before they go public.</p>
             <div className="subscribe-row" style={{ display: "flex", gap: 8 }}>
               <input type="email" placeholder="Your email address" style={{ flex: 1, border: "1px solid #ddd", borderRadius: 5, padding: "10px 14px", fontSize: 13, outline: "none", background: "white", fontFamily: "inherit", minWidth: 0 }} />
-              <button onClick={() => setPage("alerts")} style={{ background: "#1a3c5e", color: "white", border: "none", borderRadius: 5, padding: "10px 18px", cursor: "pointer", fontSize: 13, fontWeight: 600, whiteSpace: "nowrap", transition: "opacity 0.15s" }}
-                onMouseEnter={e => e.currentTarget.style.opacity = "0.85"}
-                onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
-                Subscribe
-              </button>
+              <button onClick={() => setPage("alerts")} style={{ background: "#1a3c5e", color: "white", border: "none", borderRadius: 5, padding: "10px 18px", cursor: "pointer", fontSize: 13, fontWeight: 600, whiteSpace: "nowrap" }}>Subscribe</button>
             </div>
           </div>
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-            <button onClick={() => setPage("deals")} style={{ background: "#1a3c5e", color: "white", border: "none", borderRadius: 6, padding: "14px 28px", cursor: "pointer", fontSize: 14, fontWeight: 600, letterSpacing: "0.2px", transition: "opacity 0.2s" }}
-              onMouseEnter={e => e.currentTarget.style.opacity = "0.85"}
-              onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
-              Browse deals
-            </button>
-            <button onClick={() => setPage("alerts")} style={{ background: "transparent", color: "#1a3c5e", border: "1px solid #d0d0d0", borderRadius: 6, padding: "14px 28px", cursor: "pointer", fontSize: 14, fontWeight: 500, transition: "border-color 0.2s" }}
-              onMouseEnter={e => e.currentTarget.style.borderColor = "#1a3c5e"}
-              onMouseLeave={e => e.currentTarget.style.borderColor = "#d0d0d0"}>
-              Get deal alerts
-            </button>
+            <button onClick={() => setPage("deals")} style={{ background: "#1a3c5e", color: "white", border: "none", borderRadius: 6, padding: "14px 28px", cursor: "pointer", fontSize: 14, fontWeight: 600 }}>Browse deals</button>
+            <button onClick={() => setPage("alerts")} style={{ background: "transparent", color: "#1a3c5e", border: "1px solid #d0d0d0", borderRadius: 6, padding: "14px 28px", cursor: "pointer", fontSize: 14, fontWeight: 500 }}>Get deal alerts</button>
           </div>
         </div>
         <div className="hero-image-col" style={{ position: "relative", display: "flex", alignItems: "stretch" }}>
@@ -225,7 +234,7 @@ function Hero({ setPage }) {
               {[["240+", "Deals sourced"], ["£18M+", "Capital placed"], ["94%", "Retention rate"]].map(([num, label]) => (
                 <div key={label} style={{ textAlign: "center" }}>
                   <div style={{ fontFamily: "'Georgia', serif", fontSize: 26, fontWeight: 700, color: "#1a3c5e", letterSpacing: "-0.5px", lineHeight: 1 }}>{num}</div>
-                  <div style={{ fontSize: 11, color: "#aaa", marginTop: 5, fontWeight: 500, letterSpacing: "0.3px" }}>{label}</div>
+                  <div style={{ fontSize: 11, color: "#aaa", marginTop: 5, fontWeight: 500 }}>{label}</div>
                 </div>
               ))}
             </div>
@@ -238,11 +247,9 @@ function Hero({ setPage }) {
           {[["R2R","Rent to Rent"], ["BMV","Below Market Value"], ["BTL","Buy to Let"], ["BRRR","Buy Refurb Refinance Rent"]].map(([type, label], i) => {
             const tc = typeColors[type];
             return (
-              <div key={type} style={{ display: "flex", alignItems: "center", gap: 0 }}>
+              <div key={type} style={{ display: "flex", alignItems: "center" }}>
                 {i > 0 && <div style={{ width: 1, height: 20, background: "#ebebeb", margin: "0 28px" }} />}
-                <button onClick={() => setPage(type.toLowerCase())} style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 10, padding: "0", transition: "opacity 0.15s" }}
-                  onMouseEnter={e => e.currentTarget.style.opacity = "0.6"}
-                  onMouseLeave={e => e.currentTarget.style.opacity = "1"}>
+                <button onClick={() => setPage(type.toLowerCase())} style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 10, padding: 0 }}>
                   <span style={{ background: tc.bg, color: tc.text, fontSize: 10, fontWeight: 700, letterSpacing: "0.8px", borderRadius: 4, padding: "3px 7px" }}>{type}</span>
                   <span style={{ fontSize: 13, color: "#444", fontWeight: 400 }}>{label}</span>
                 </button>
@@ -265,12 +272,12 @@ function CategoryGrid({ setPage }) {
         </div>
         <div className="category-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 24 }}>
           {CATEGORIES.map(cat => (
-            <div key={cat.type} onClick={() => setPage(cat.type.toLowerCase())} style={{ background: "white", borderRadius: 16, padding: "32px 28px", cursor: "pointer", border: "1px solid #e8e8e8", transition: "all 0.25s", position: "relative", overflow: "hidden" }}
+            <div key={cat.type} onClick={() => setPage(cat.type.toLowerCase())} style={{ background: "white", borderRadius: 16, padding: "32px 28px", cursor: "pointer", border: "1px solid #e8e8e8", transition: "all 0.25s" }}
               onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.boxShadow = "0 16px 48px rgba(26,60,94,0.12)"; e.currentTarget.style.borderColor = cat.color; }}
               onMouseLeave={e => { e.currentTarget.style.transform = "none"; e.currentTarget.style.boxShadow = "none"; e.currentTarget.style.borderColor = "#e8e8e8"; }}>
               {(() => { const Icon = CATEGORY_ICONS[cat.type]; return <div style={{ width: 52, height: 52, background: cat.light, borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 20 }}><Icon color={cat.color} /></div>; })()}
               <div style={{ display: "inline-block", background: cat.light, color: cat.color, fontSize: 11, fontWeight: 700, letterSpacing: "1px", textTransform: "uppercase", borderRadius: 6, padding: "4px 10px", marginBottom: 12 }}>{cat.type}</div>
-              <h3 style={{ fontFamily: "'Georgia', serif", fontSize: 20, fontWeight: 700, color: "#1a1a1a", margin: "0 0 10px", letterSpacing: "-0.3px" }}>{cat.label}</h3>
+              <h3 style={{ fontFamily: "'Georgia', serif", fontSize: 20, fontWeight: 700, color: "#1a1a1a", margin: "0 0 10px" }}>{cat.label}</h3>
               <p style={{ fontSize: 14, color: "#666", lineHeight: 1.6, margin: 0 }}>{cat.description}</p>
               <div style={{ marginTop: 24, display: "flex", alignItems: "center", gap: 6, color: cat.color, fontSize: 14, fontWeight: 600 }}>View deals <span>→</span></div>
             </div>
@@ -294,8 +301,8 @@ function DealCard({ deal, onClick }) {
         <div style={{ position: "absolute", top: 12, right: 12, background: sc.bg, color: sc.text, fontSize: 11, fontWeight: 600, borderRadius: 6, padding: "4px 10px" }}>{deal.status}</div>
       </div>
       <div style={{ padding: "20px 20px 16px" }}>
-        <p style={{ fontSize: 12, color: "#999", marginBottom: 6, letterSpacing: "0.3px" }}>{deal.location}</p>
-        <h3 style={{ fontFamily: "'Georgia', serif", fontSize: 17, fontWeight: 700, color: "#1a1a1a", margin: "0 0 16px", lineHeight: 1.3, letterSpacing: "-0.2px" }}>{deal.title}</h3>
+        <p style={{ fontSize: 12, color: "#999", marginBottom: 6 }}>{deal.location}</p>
+        <h3 style={{ fontFamily: "'Georgia', serif", fontSize: 17, fontWeight: 700, color: "#1a1a1a", margin: "0 0 16px", lineHeight: 1.3 }}>{deal.title}</h3>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, marginBottom: 18 }}>
           {[["ROI", `${deal.roi}%`], ["Yield", `${deal.yield}%`], ["Cashflow", `£${deal.cashflow}/mo`]].map(([l, v]) => (
             <div key={l} style={{ background: "#f7f8fc", borderRadius: 8, padding: "10px 8px", textAlign: "center" }}>
@@ -365,9 +372,6 @@ function DealsPage({ typeFilter, setActiveDeal }) {
       <FilterBar filters={filters} setFilters={setFilters} />
       {filtered.length === 0 ? (
         <div style={{ textAlign: "center", padding: "60px 20px", color: "#999" }}>
-          <div style={{ width: 64, height: 64, background: "#f0f0f0", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px" }}>
-            <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="12" cy="12" r="8" stroke="#aaa" strokeWidth="1.8"/><path d="M18 18L24 24" stroke="#aaa" strokeWidth="1.8" strokeLinecap="round"/></svg>
-          </div>
           <p style={{ fontSize: 18 }}>No deals match your criteria.</p>
         </div>
       ) : (
@@ -382,9 +386,39 @@ function DealsPage({ typeFilter, setActiveDeal }) {
 function InquiryForm({ deal }) {
   const [form, setForm] = useState({ name: "", email: "", phone: "", whatsapp: "", contactPref: "", investorType: "", budget: "", area: "", experience: "", message: "" });
   const [sent, setSent] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const set = k => e => setForm(f => ({ ...f, [k]: e.target.value }));
   const inputStyle = { width: "100%", border: "1px solid #e0e0e0", borderRadius: 8, padding: "11px 14px", fontSize: 14, outline: "none", boxSizing: "border-box", fontFamily: "inherit" };
   const labelStyle = { fontSize: 13, fontWeight: 600, color: "#444", display: "block", marginBottom: 6 };
+
+  const handleSubmit = async () => {
+    if (!form.name || !form.email) { setError("Please fill in your name and email."); return; }
+    setLoading(true);
+    setError("");
+    try {
+      await sendToAirtable({
+        "Full Name": form.name,
+        "Email": form.email,
+        "Phone": form.phone || undefined,
+        "WhatsApp": form.whatsapp || undefined,
+        "Contact Preference": form.contactPref || undefined,
+        "Investor Type": form.investorType || undefined,
+        "Budget Range": form.budget || undefined,
+        "Experience Level": form.experience || undefined,
+        "Target Area": form.area || undefined,
+        "Message": form.message || undefined,
+        "Deal Interested In": deal ? deal.title : undefined,
+        "Status": "New",
+        "Source": "Website Enquiry",
+      });
+      setSent(true);
+    } catch (e) {
+      setError("Something went wrong. Please try again.");
+    }
+    setLoading(false);
+  };
+
   if (sent) return (
     <div style={{ textAlign: "center", padding: "40px 20px" }}>
       <div style={{ width: 56, height: 56, background: "#e8f5ee", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px" }}>
@@ -394,6 +428,7 @@ function InquiryForm({ deal }) {
       <p style={{ color: "#666", fontSize: 15 }}>A TPS Group advisor will be in touch within 24 hours.</p>
     </div>
   );
+
   return (
     <div>
       <h3 style={{ fontFamily: "'Georgia', serif", fontSize: 20, fontWeight: 700, color: "#1a1a1a", margin: "0 0 24px" }}>Register Interest</h3>
@@ -431,8 +466,9 @@ function InquiryForm({ deal }) {
       </div>
       <div style={{ marginBottom: 14 }}><label style={labelStyle}>Target Area</label><input value={form.area} onChange={set("area")} placeholder="e.g. Manchester, Leeds, Sheffield" style={inputStyle} /></div>
       <div style={{ marginBottom: 20 }}><label style={labelStyle}>Message</label><textarea value={form.message} onChange={set("message")} placeholder={`Questions about ${deal ? deal.title : "this deal"}...`} rows={3} style={{ ...inputStyle, resize: "vertical" }} /></div>
-      <button onClick={() => setSent(true)} style={{ width: "100%", background: "#1a3c5e", color: "white", border: "none", borderRadius: 10, padding: "14px", cursor: "pointer", fontSize: 15, fontWeight: 700, letterSpacing: "-0.2px" }}>
-        Submit Enquiry →
+      {error && <p style={{ color: "#c0392b", fontSize: 13, marginBottom: 12 }}>{error}</p>}
+      <button onClick={handleSubmit} disabled={loading} style={{ width: "100%", background: loading ? "#7f9db5" : "#1a3c5e", color: "white", border: "none", borderRadius: 10, padding: "14px", cursor: loading ? "not-allowed" : "pointer", fontSize: 15, fontWeight: 700 }}>
+        {loading ? "Sending..." : "Submit Enquiry →"}
       </button>
       <p style={{ fontSize: 12, color: "#aaa", textAlign: "center", marginTop: 12 }}>Your details are kept strictly confidential.</p>
     </div>
@@ -454,10 +490,7 @@ function DealDetailPage({ deal, setPage }) {
               <div style={{ display: "flex", gap: 8, marginBottom: 16, flexWrap: "wrap" }}>
                 <span style={{ background: tc.bg, color: tc.text, fontSize: 11, fontWeight: 700, letterSpacing: "1px", textTransform: "uppercase", borderRadius: 6, padding: "4px 10px" }}>{deal.type}</span>
                 <span style={{ background: statusColors[deal.status]?.bg, color: statusColors[deal.status]?.text, fontSize: 11, fontWeight: 600, borderRadius: 6, padding: "4px 10px" }}>{deal.status}</span>
-                <span style={{ background: "#f0f0f0", color: "#666", fontSize: 11, borderRadius: 6, padding: "4px 10px", display: "inline-flex", alignItems: "center", gap: 4 }}>
-                  <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.8 0 1 1.8 1 4C1 7 5 12 5 12C5 12 9 7 9 4C9 1.8 7.2 0 5 0Z" fill="#888"/><circle cx="5" cy="4" r="1.5" fill="white"/></svg>
-                  {deal.location}
-                </span>
+                <span style={{ background: "#f0f0f0", color: "#666", fontSize: 11, borderRadius: 6, padding: "4px 10px" }}>{deal.location}</span>
               </div>
               <h1 style={{ fontFamily: "'Georgia', serif", fontSize: 30, fontWeight: 700, color: "#1a1a1a", margin: "0 0 16px", letterSpacing: "-0.5px" }}>{deal.title}</h1>
               <div className="deal-metrics" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12, marginBottom: 24 }}>
@@ -512,8 +545,33 @@ function DealDetailPage({ deal, setPage }) {
 
 function AlertsPage() {
   const [sent, setSent] = useState(false);
-  const [form, setForm] = useState({ name: "", email: "", phone: "", types: [], budget: "", areas: "", frequency: "daily" });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [form, setForm] = useState({ name: "", email: "", phone: "", types: [], budget: "", areas: "", frequency: "Daily" });
   const toggleType = t => setForm(f => ({ ...f, types: f.types.includes(t) ? f.types.filter(x => x !== t) : [...f.types, t] }));
+
+  const handleSubmit = async () => {
+    if (!form.name || !form.email) { setError("Please fill in your name and email."); return; }
+    setLoading(true);
+    setError("");
+    try {
+      await sendToAirtable({
+        "Full Name": form.name,
+        "Email": form.email,
+        "Phone": form.phone || undefined,
+        "Budget Range": form.budget || undefined,
+        "Target Area": form.areas || undefined,
+        "Message": form.types.length > 0 ? `Deal types: ${form.types.join(", ")} | Frequency: ${form.frequency}` : `Frequency: ${form.frequency}`,
+        "Status": "New",
+        "Source": "Deal Alert",
+      });
+      setSent(true);
+    } catch (e) {
+      setError("Something went wrong. Please try again.");
+    }
+    setLoading(false);
+  };
+
   if (sent) return (
     <div style={{ minHeight: "80vh", display: "flex", alignItems: "center", justifyContent: "center", padding: "100px 5%" }}>
       <div style={{ textAlign: "center", maxWidth: 480 }}>
@@ -525,6 +583,7 @@ function AlertsPage() {
       </div>
     </div>
   );
+
   const inputStyle = { width: "100%", border: "1px solid #e0e0e0", borderRadius: 8, padding: "11px 14px", fontSize: 14, outline: "none", boxSizing: "border-box", fontFamily: "inherit" };
   const labelStyle = { fontSize: 13, fontWeight: 600, color: "#444", display: "block", marginBottom: 6 };
   return (
@@ -563,13 +622,14 @@ function AlertsPage() {
           <div style={{ marginBottom: 28 }}>
             <label style={labelStyle}>Alert Frequency</label>
             <div style={{ display: "flex", gap: 10 }}>
-              {["daily","weekly","as-listed"].map(freq => (
-                <button key={freq} onClick={() => setForm(f => ({ ...f, frequency: freq }))} style={{ border: form.frequency === freq ? "2px solid #1a3c5e" : "1px solid #e0e0e0", background: form.frequency === freq ? "#e8f0f8" : "white", color: form.frequency === freq ? "#1a3c5e" : "#666", borderRadius: 8, padding: "8px 18px", cursor: "pointer", fontSize: 14, fontWeight: form.frequency === freq ? 700 : 400, transition: "all 0.15s", textTransform: "capitalize" }}>{freq}</button>
+              {["Daily","Weekly","As-listed"].map(freq => (
+                <button key={freq} onClick={() => setForm(f => ({ ...f, frequency: freq }))} style={{ border: form.frequency === freq ? "2px solid #1a3c5e" : "1px solid #e0e0e0", background: form.frequency === freq ? "#e8f0f8" : "white", color: form.frequency === freq ? "#1a3c5e" : "#666", borderRadius: 8, padding: "8px 18px", cursor: "pointer", fontSize: 14, fontWeight: form.frequency === freq ? 700 : 400, transition: "all 0.15s" }}>{freq}</button>
               ))}
             </div>
           </div>
-          <button onClick={() => setSent(true)} style={{ width: "100%", background: "#1a3c5e", color: "white", border: "none", borderRadius: 10, padding: "15px", cursor: "pointer", fontSize: 16, fontWeight: 700 }}>
-            Join Deal Alerts →
+          {error && <p style={{ color: "#c0392b", fontSize: 13, marginBottom: 12 }}>{error}</p>}
+          <button onClick={handleSubmit} disabled={loading} style={{ width: "100%", background: loading ? "#7f9db5" : "#1a3c5e", color: "white", border: "none", borderRadius: 10, padding: "15px", cursor: loading ? "not-allowed" : "pointer", fontSize: 16, fontWeight: 700 }}>
+            {loading ? "Sending..." : "Join Deal Alerts →"}
           </button>
         </div>
       </div>
@@ -591,7 +651,7 @@ function HowItWorks() {
           <p style={{ fontSize: 13, fontWeight: 600, color: "#1a3c5e", letterSpacing: "1.5px", textTransform: "uppercase", marginBottom: 12 }}>The Process</p>
           <h2 style={{ fontFamily: "'Georgia', serif", fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 700, color: "#1a1a1a", letterSpacing: "-0.8px", margin: 0 }}>From sourcing to cashflow</h2>
         </div>
-        <div className="hiw-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 2, position: "relative" }}>
+        <div className="hiw-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 2 }}>
           {steps.map((s, i) => (
             <div key={s.n} className="hiw-step" style={{ background: "white", padding: "32px 28px", border: "1px solid #e8e8e8", borderRadius: i === 0 ? "14px 0 0 14px" : i === 3 ? "0 14px 14px 0" : 0 }}>
               <div style={{ fontFamily: "'Georgia', serif", fontSize: 40, fontWeight: 700, color: "#e8e8e8", marginBottom: 12, lineHeight: 1 }}>{s.n}</div>
@@ -654,20 +714,20 @@ function Footer({ setPage }) {
   return (
     <footer style={{ background: "#0d2137", padding: "56px 5% 32px" }}>
       <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-        <div className="footer-grid" style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr", gap: 48, marginBottom: 48, flexWrap: "wrap" }}>
+        <div className="footer-grid" style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr", gap: 48, marginBottom: 48 }}>
           <div className="footer-brand">
             <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
-              <TPSLogo size={38} dark />
+              <TPSLogo size={38} />
               <div>
                 <div style={{ fontFamily: "'Arial Rounded MT Bold', 'Arial', sans-serif", fontWeight: 800, fontSize: 20, color: "white", letterSpacing: "-0.5px", lineHeight: 1.1 }}>TPS</div>
-                <div style={{ fontSize: 11, color: "rgba(255,255,255,0.55)", letterSpacing: "0.3px" }}>The Property Source Group</div>
+                <div style={{ fontSize: 11, color: "rgba(255,255,255,0.55)" }}>The Property Source Group</div>
               </div>
             </div>
             <p style={{ fontSize: 14, color: "rgba(255,255,255,0.5)", lineHeight: 1.7, maxWidth: 280 }}>Premium property deal flow for serious UK investors. R2R, BMV, BTL and BRRR opportunities sourced daily.</p>
           </div>
           {[["Strategies", ["R2R Deals","BMV Deals","BTL Deals","BRRR Deals"]], ["Company", ["About TPS","How It Works","Contact","Join Alerts"]]].map(([h, links]) => (
             <div key={h}>
-              <p style={{ fontSize: 13, fontWeight: 600, color: "rgba(255,255,255,0.9)", marginBottom: 16, letterSpacing: "0.5px" }}>{h}</p>
+              <p style={{ fontSize: 13, fontWeight: 600, color: "rgba(255,255,255,0.9)", marginBottom: 16 }}>{h}</p>
               {links.map(l => <p key={l} style={{ fontSize: 14, color: "rgba(255,255,255,0.45)", margin: "0 0 10px", cursor: "pointer" }}>{l}</p>)}
             </div>
           ))}
@@ -711,7 +771,6 @@ export default function App() {
 
   const handleSetActiveDeal = deal => { setActiveDeal(deal); setPage("deal-detail"); window.scrollTo(0, 0); };
   const handleSetPage = p => { setActiveDeal(null); setPage(p); window.scrollTo(0, 0); };
-
   const typeFilter = ["r2r","bmv","btl","brrr","deals"].includes(page) ? (page === "deals" ? null : page.toUpperCase()) : null;
 
   return (
@@ -757,19 +816,8 @@ export default function App() {
         }
       `}</style>
       <NavBar page={page} setPage={handleSetPage} />
-      {page === "home" && <>
-        <Hero setPage={handleSetPage} />
-        <CategoryGrid setPage={handleSetPage} />
-        <FeaturedDeals setActiveDeal={handleSetActiveDeal} />
-        <HowItWorks />
-        <WhyTPS />
-        <CTABanner setPage={handleSetPage} />
-        <Footer setPage={handleSetPage} />
-      </>}
-      {(["r2r","bmv","btl","brrr","deals"].includes(page)) && <>
-        <DealsPage typeFilter={typeFilter} setActiveDeal={handleSetActiveDeal} />
-        <Footer setPage={handleSetPage} />
-      </>}
+      {page === "home" && <><Hero setPage={handleSetPage} /><CategoryGrid setPage={handleSetPage} /><FeaturedDeals setActiveDeal={handleSetActiveDeal} /><HowItWorks /><WhyTPS /><CTABanner setPage={handleSetPage} /><Footer setPage={handleSetPage} /></>}
+      {(["r2r","bmv","btl","brrr","deals"].includes(page)) && <><DealsPage typeFilter={typeFilter} setActiveDeal={handleSetActiveDeal} /><Footer setPage={handleSetPage} /></>}
       {page === "deal-detail" && activeDeal && <><DealDetailPage deal={activeDeal} setPage={handleSetPage} /><Footer setPage={handleSetPage} /></>}
       {page === "alerts" && <><AlertsPage /><Footer setPage={handleSetPage} /></>}
     </div>
