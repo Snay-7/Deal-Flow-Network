@@ -61,6 +61,36 @@ const DEALS = [
     location: "Lenton, Nottingham, NG7",
     image: "https://images.unsplash.com/photo-1599427303058-f04cbcf4756f?w=800&q=80",
   },
+  {
+  id: 8,
+  type: "R2R",
+  title: "Edgware Road 2-Bed Ground Floor",
+  area: "London",
+  location: "Edgware Road, London, W2",
+  price: 3500,
+  roi: 57.1,
+  yield: null,
+  cashflow: 2000,
+  status: "Available",
+  beds: 2,
+  bathrooms: 1,
+  description: "Newly refurbished 2-bedroom ground floor flat in a prime Edgware Road location, suited to a Rent-to-Rent strategy with strong short-let or serviced accommodation potential.",
+  highlights: [
+    "Newly refurbished",
+    "Ground floor unit",
+    "Prime Edgware Road location",
+    "Strong income potential"
+  ],
+  financials: {
+    monthlyRent: 3500,
+    averageMonthlyEarnings: 5500,
+    managementFees: 0,
+    netMonthly: 2000,
+    annualReturn: 24000,
+    setupCosts: 3500
+  }
+    image:"https://ibb.co/mF1tmkwk"
+}
 ];
 
 const IconR2R = ({ color }) => (
